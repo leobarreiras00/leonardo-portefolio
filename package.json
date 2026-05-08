@@ -18,6 +18,7 @@
     "@iconify-json/skill-icons": "^1.2.4",
     "@iconify-json/vscode-icons": "^1.2.49",
     "@tailwindcss/vite": "^4.2.0",
+    "@vercel/analytics": "^2.0.1",
     "astro": "^6.1.3",
     "astro-icon": "^1.1.5",
     "tailwindcss": "^4.2.0",
