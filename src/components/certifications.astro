@@ -1,0 +1,20 @@
+---
+import CertificationCard from './certification-card.astro';
+import certsData from '../data/certifications.json';
+---
+
+<section id="certifications" class="section-container">
+  <div class="container mx-auto px-4">
+    <div class="mb-12">
+      <h2 class="text-3xl font-heading font-bold text-maintext flex items-center gap-4">
+        <span class="text-accent">/</span> Certifications
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {certsData.map((cert) => (
+        <CertificationCard cert={cert} />
+      ))}
+    </div>
+  </div>
+</section>

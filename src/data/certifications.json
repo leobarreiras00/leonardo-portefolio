@@ -1,0 +1,51 @@
+[
+  {
+    "title": "Networking Basics",
+    "issuer": "Cisco Networking Academy",
+    "hours": "22h",
+    "image": "/certificates/nb-preview.jpg",
+    "url": "/certificates/NB.pdf"
+  },
+  {
+    "title": "English for IT 1",
+    "issuer": "Cisco Networking Academy",
+    "hours": "50h",
+    "image": "/certificates/eng_it-preview.jpg",
+    "url": "/certificates/IT_ENG.pdf"
+  },
+  {
+    "title": "Estruturas de Dados",
+    "issuer": "Plataforma NAU",
+    "hours": "25h",
+    "image": "/certificates/ed-preview.jpg",
+    "url": "https://lms.nau.edu.pt/certificates/e38eb049b47b4e6885b0987e3c14637e"
+  },
+  {
+    "title": "Fundamentos de Bases de Dados",
+    "issuer": "Plataforma NAU",
+    "hours": "25h",
+    "image": "/certificates/fbd-preview.jpg",
+    "url": "https://lms.nau.edu.pt/certificates/eb3c9c19ed154ff1878d624191b6d739"
+  },
+  {
+    "title": "Introdução à Programação Web",
+    "issuer": "Plataforma NAU",
+    "hours": "25h",
+    "image": "/certificates/ipw-preview.jpg",
+    "url": "https://lms.nau.edu.pt/certificates/f6376cce1f4748c7826c8ee2cbb72599"
+  },
+  {
+    "title": "Introdução ao CSS",
+    "issuer": "Plataforma NAU",
+    "hours": "21h",
+    "image": "/certificates/icss-preview.jpg",
+    "url": "https://lms.nau.edu.pt/certificates/2c5a3b1cb1a3413aa06add28efacada8"
+  },
+  {
+    "title": "Introdução ao HTML",
+    "issuer": "Plataforma NAU",
+    "hours": "21h",
+    "image": "/certificates/ihtml-preview.jpg",
+    "url": "https://lms.nau.edu.pt/certificates/3bd2a6afc7ab4442b855edc51eeb6ed3"
+  }
+]
