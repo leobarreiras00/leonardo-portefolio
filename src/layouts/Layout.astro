@@ -19,6 +19,18 @@ const defaultTheme = `${baseTheme}-dark`;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content="Portefólio de Leonardo Barreiras - Estudante de Engenharia Informática no IPS. Focado em .NET, Android e AI-Driven Development." />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://leonardo-barreiras.vercel.app/" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content="Portefólio de Leonardo Barreiras - Estudante de Engenharia Informática no IPS. Focado em .NET, Android e AI-Driven Development." />    <meta property="og:image" content="https://leonardo-barreiras.vercel.app/og-image.jpg" />
+
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://leonardo-barreiras.vercel.app/" />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content="Portefólio de Leonardo Barreiras - Estudante de Engenharia Informática no IPS. Focado em .NET, Android e AI-Driven Development." />    <meta property="twitter:image" content="https://leonardo-barreiras.vercel.app/og-image.jpg" />
 
     <!-- THEME TOGGLE SCRIPT -->
     <script is:inline define:vars={{ baseTheme, defaultTheme }}>
