@@ -1,70 +1,39 @@
 {
-  "name": "John Doe",
-  "photoUrl": "favicon.svg",
-  "intro": "A brief, compelling introduction about who you are and what you do. Mention your core philosophy, your passion for building digital products, and your drive for creating efficient, high-impact solutions.",
-  "introHtml": "A brief, compelling introduction about who you are and what you do. Mention your core <span class='text-white font-bold'>philosophy</span>, your passion for building digital products, and your drive for creating <span class='text-white font-bold'>efficient</span>, <span class='text-white font-bold'>high-impact</span> solutions.",
-  "webpageTitle": "John Doe",
-  "resumeUrl": "https://example-files.online-convert.com/document/pdf/example.pdf",
-
-  "_comment": "Add your social links below. Leave the 'url' empty to hide the icon. Set 'showInContact' to true or false to control if it appears in the Contact section.",
+  "name": "Leonardo Barreiras",
+  "photoUrl": "/lb_prof.jpg",
+  "intro": "Estudante de Engenharia Informática no IPS e entusiasta de AI-Driven Development. Foco-me em criar soluções de software onde o rigor da arquitetura e a rapidez de entrega andam de mãos dadas.",
+  "introHtml": "Estudante de Engenharia Informática no IPS e entusiasta de <span class='text-white font-bold'>AI-Driven Development</span>. Foco-me em criar soluções de software onde o <span class='text-white font-bold'>rigor da arquitetura</span> e a <span class='text-white font-bold'>rapidez de entrega</span> andam de mãos dadas.",
+  "webpageTitle": "Leonardo Barreiras | Software Engineer",
+  "resumeUrl": "/LB_CV.pdf",
+  "_comment": "Add your social links below.",
   "socials": [
     {
       "name": "GitHub",
-      "url": "https://github.com/[YOUR_USER_NAME]",
+      "url": "https://github.com/leobarreiras00",
       "icon": "mdi:github",
       "showInContact": true
     },
     {
       "name": "LinkedIn",
-      "url": "https://linkedin.com/in/[YOUR_USER_NAME]",
+      "url": "https://www.linkedin.com/in/leonardo-barreiras/",
       "icon": "mdi:linkedin",
       "showInContact": true
     },
     {
-      "name": "Leetcode",
-      "url": "#",
-      "icon": "devicon-plain:leetcode",
-      "showInContact": false
-    },
-    {
-      "name": "Behance",
-      "url": "#",
-      "icon": "devicon-plain:behance",
-      "showInContact": false
-    },
-    {
       "name": "Email",
-      "url": "mailto:your-mail@example.com",
+      "url": "mailto:leo.gbarreiras@gmail.com",
       "icon": "mdi:email",
       "showInContact": true
     },
     {
-      "name": "Whatsapp",
-      "url": "https://wa.me/[YOUR_WHATSAPP_NUMBER]",
-      "icon": "mdi:whatsapp",
-      "showInContact": true
-    },
-    {
-      "name": "Facebook",
-      "url": "#",
-      "icon": "mdi:facebook",
-      "showInContact": false
-    },
-    {
-      "name": "Messenger",
-      "url": "#",
-      "icon": "mdi:facebook-messenger",
-      "showInContact": true
-    },
-    {
       "name": "Instagram",
-      "url": "#",
+      "url": "https://www.instagram.com/leo_barreiras/",
       "icon": "mdi:instagram",
       "showInContact": false
     },
     {
       "name": "Twitter",
-      "url": "#",
+      "url": "",
       "icon": "mdi:twitter",
       "showInContact": false
     }

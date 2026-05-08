@@ -1,35 +1,42 @@
 {
   "categories": [
     {
-      "title": "Mobile Development",
+      "title": "Backend & Software Engineering",
       "skills": [
-        { "name": "Flutter", "level": 3, "icon": "skill-icons:flutter-dark" },
-        { "name": "Dart", "level": 3, "icon": "skill-icons:dart-dark" },
-        { "name": "Kotlin", "level": 1, "icon": "skill-icons:kotlin-dark" }
+        { "name": "C#", "level": 3, "icon": "skill-icons:cs" },
+        { "name": ".NET Core / 8", "level": 3, "icon": "skill-icons:dotnet" },
+        { "name": "Entity Framework Core", "level": 3, "icon": "vscode-icons:file-type-sql" },
+        { "name": "Java (POO)", "level": 2, "icon": "skill-icons:java-dark" },
+        { "name": "Python", "level": 2, "icon": "skill-icons:python-dark" }
       ]
     },
     {
-      "title": "Frontend",
+      "title": "Ferramentas & Gestão de Projetos",
       "skills": [
-        { "name": "Astro", "level": 2, "icon": "skill-icons:astro" },
-        { "name": "HTML", "level": 2, "icon": "skill-icons:html" },
-        { "name": "CSS", "level": 2, "icon": "skill-icons:css" },
-        { "name": "Tailwind CSS", "level": 1, "icon": "skill-icons:tailwindcss-dark" }
+        { "name": "GitHub", "level": 3, "icon": "skill-icons:github-dark" },
+        { "name": "Jira", "level": 2, "icon": "devicon:jira" },
+        { "name": "Confluence", "level": 2, "icon": "devicon:confluence" },
+        { "name": "Engenharia de Prompts", "level": 3, "icon": "mdi:robot-outline" }
       ]
     },
     {
-      "title": "Backend",
+      "title": "Bases de Dados & Web",
       "skills": [
-        { "name": "FastAPI", "level": 2, "icon": "skill-icons:fastapi" },
-        { "name": "Python", "level": 2, "icon": "skill-icons:python-dark" },
-        { "name": "Firebase", "level": 3, "icon": "vscode-icons:file-type-firebase" }
+        { "name": "SQL", "level": 3, "icon": "skill-icons:mysql-dark" },
+        { "name": "JavaScript", "level": 2, "icon": "skill-icons:javascript" },
+        { "name": "HTML5", "level": 2, "icon": "skill-icons:html" },
+        { "name": "CSS3", "level": 2, "icon": "skill-icons:css" },
+        { "name": "UI/UX & Mockups", "level": 2, "icon": "skill-icons:figma-dark" }
       ]
     },
     {
-      "title": "Database",
+      "title": "Sistemas, Redes & Mobile",
       "skills": [
-        { "name": "SQLite", "level": 3, "icon": "skill-icons:sqlite" },
-        { "name": "PostgreSQL", "level": 2, "icon": "skill-icons:postgresql-dark" }
+        { "name": "C (Sistemas Operativos)", "level": 2, "icon": "skill-icons:c" },
+        { "name": "Segurança Informática", "level": 2, "icon": "mdi:shield-lock-outline" },
+        { "name": "Redes (Cisco)", "level": 2, "icon": "mdi:router-network" },
+        { "name": "Flutter", "level": 1, "icon": "skill-icons:flutter-dark" },
+        { "name": "Android Studio", "level": 1, "icon": "skill-icons:androidstudio-dark" }
       ]
     }
   ]

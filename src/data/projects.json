@@ -1,20 +1,29 @@
 [
   {
-    "title": "Awesome Website",
-    "description": "A high-performance, SEO-optimized web application built with modern frameworks to showcase technical expertise.",
-    "images": ["astro-01.webp", "astro-02.jpeg"],
-    "tech": ["Astro", "Tailwind"],
+    "title": "CareSync",
+    "description": "Plataforma web completa para gestão empresarial. Implementação de fluxos críticos de faturação, geração de PDFs e integração avançada de Inteligência Artificial para automatização de processos.",
+    "images": ["caresync-logo.png", "caresync-dashboard.png"],
+    "tech": ["C#", "ASP.NET Core", "EF Core", "SQL Server"],
     "platforms": ["web"],
-    "link": "https://astro.build/themes/details/career-portfolio-data-driven-astro-ssg/",
-    "category": "Published Website"
+    "link": "https://github.com/leonardobarreiras00/caresync",
+    "category": "Web Application"
   },
   {
-    "title": "Demo Mobile App",
-    "description": "A high-performance mobile application built with modern frameworks to showcase technical expertise.",
-    "images": ["astro-02.jpeg", "#"],
-    "tech": ["Flutter", "Dart", "REST API"],
-    "platforms": ["apple-ios", "android"],
-    "link": "https://github.com/nbakh16/career-portfolio-template",
-    "category": "Hobby"
+    "title": "LugarCerto",
+    "description": "Aplicação Android nativa para gestão de eventos operacionais. Destaca-se por uma arquitetura MVVM estrita e lógica Offline-First robusta utilizando persistência de dados local.",
+    "images": ["lugarcerto-logo.png"],
+    "tech": ["Kotlin", "Android", "Room DB", "MVVM"],
+    "platforms": ["android"],
+    "link": "https://github.com/leonardobarreiras00/lugarcerto-app",
+    "category": "Mobile Application"
+  },
+  {
+    "title": "Elevator Management",
+    "description": "Sistema integrado de gestão, monitorização e manutenção de elevadores. Focado na otimização de rotas de assistência, gestão de contratos e monitorização em tempo real do estado dos equipamentos.",
+    "images": ["elevator-logo.png"],
+    "tech": ["Java", "Object Oriented Programming"],
+    "platforms": ["web", "cellphone"],
+    "link": "https://github.com/leonardobarreiras00/elevator-management",
+    "category": "IoT & Web System"
   }
 ]

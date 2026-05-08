@@ -1,26 +1,26 @@
 [
   {
-    "company": "Demo Company",
-    "role": "Lead Software Engineer",
-    "period": "Oct 2025 - Present",
-    "type": "Full time job",
-    "description": "Leading cross-platform mobile development using Flutter and FastAPI. Focused on scalable system design and high-performance data processing.",
-    "skills": ["Leading", "Collaboration"]
+    "company": "4ITFUTURE",
+    "role": "Software Engineering Intern",
+    "period": "Jul 2026 - Started",
+    "type": "Estágio",
+    "description": "Desenvolvimento de uma aplicação Android nativa (Kotlin) focada em operação offline-first para gestão de eventos. Implementação de arquitetura MVVM, Room Database e sincronização de dados via REST API.",
+    "skills": ["Android", "Kotlin", "MVVM", "SQL"]
   },
   {
-    "company": "Demo Company",
-    "role": "Full-stack Developer",
-    "period": "Sep 2023 - Sep 2025",
-    "type": "Full time job",
-    "description": "Specializing in Business Research Methods and Strategic HRM. Applying analytical frameworks to human capital management.",
-    "skills": ["React", "Node.js", "PostgreSQL", "Docker"]
+    "company": "Instituto Politécnico de Setúbal (IPS)",
+    "role": "Licenciatura em Engenharia Informática",
+    "period": "Out 2022 - Jun 2026",
+    "type": "Estudante",
+    "description": "Foco em engenharia de software pragmática, desenvolvimento mobile/web e integração de IA no ciclo de desenvolvimento. Projetos complexos e modulares orientados a soluções empresariais.",
+    "skills": ["C#", ".NET", "Java", "Bases de Dados", "Arquitetura de Software", "Gestão de Projetos"]
   },
   {
-    "company": "Demo University of Tech",
-    "role": "BSc in Computer Science",
-    "period": "Jun 2020 - Jun 2024",
-    "type": "Student",
-    "description": "Specializing in Business Research Methods and Strategic HRM. Applying analytical frameworks to human capital management.",
-    "skills": ["C++", "OOP", "Problem Solving"]
+    "company": "Inditex",
+    "role": "Atendimento ao Cliente e Gestão de Loja",
+    "period": "may 2023 - jul 2023",
+    "type": "Part-time",
+    "description": "Desenvolvimento de soft skills cruciais em ambiente dinâmico e de alta pressão: trabalho em equipa, resolução de problemas em tempo real e comunicação eficaz com o público.",
+    "skills": ["Trabalho em Equipa", "Comunicação", "Resolução de Problemas"]
   }
 ]
