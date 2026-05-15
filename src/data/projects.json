@@ -9,13 +9,13 @@
     "category": "Web Application"
   },
   {
-    "title": "LugarCerto",
-    "description": "Aplicação Android nativa para gestão de eventos operacionais. Destaca-se por uma arquitetura MVVM estrita e lógica Offline-First robusta utilizando persistência de dados local.",
-    "images": ["lugarcerto-logo.png"],
-    "tech": ["Kotlin", "Android", "Room DB", "MVVM"],
-    "platforms": ["android"],
-    "link": "https://github.com/leonardobarreiras00/lugarcerto-app",
-    "category": "Mobile Application"
+    "title": "lbmods",
+    "description": "Plataforma web premium de e-commerce e catálogo para a minha marca pessoal de relógios customizados. Interface desenvolvida com foco num design de alta relojoaria, animações fluidas e experiência imersiva.",
+    "images": ["lb_theme_final.jpg"],
+    "tech": ["Next.js", "React", "Tailwind CSS", "Framer Motion", "TypeScript"],
+    "platforms": ["web"],
+    "link": "https://lbmods.vercel.app",
+    "category": "Web Application"
   },
   {
     "title": "Elevator Management",
