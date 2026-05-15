@@ -1,13 +1,5 @@
 [
   {
-    "company": "4ITFUTURE",
-    "role": "Software Engineering Intern",
-    "period": "Jul 2026 - Started",
-    "type": "Estágio",
-    "description": "Desenvolvimento de uma aplicação Android nativa (Kotlin) focada em operação offline-first para gestão de eventos. Implementação de arquitetura MVVM, Room Database e sincronização de dados via REST API.",
-    "skills": ["Android", "Kotlin", "MVVM", "SQL"]
-  },
-  {
     "company": "Instituto Politécnico de Setúbal (IPS)",
     "role": "Licenciatura em Engenharia Informática",
     "period": "Out 2022 - Jun 2026",
