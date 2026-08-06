@@ -2,7 +2,7 @@
   {
     "title": "Seatly",
     "description": "Plataforma SaaS integrada de gestão e validação de eventos. Arquitetura full-stack composta por um Backoffice moderno (Next.js, TypeScript, Glassmorphism UI) alojado na Vercel, uma API RESTful escalável (.NET, Entity Framework) no Azure, aplicação mobile nativa (Kotlin) e telemetria IoT via MQTT.",
-    "images": ["seatlypage.jpg"],
+    "images": ["seatlypage.png"],
     "tech": ["Next.js", "TypeScript", "C#", ".NET", "Kotlin", "SQL Server", "MQTT", "Azure"],
     "platforms": ["web", "cellphone"],
     "link": "https://seatly-backoffice.vercel.app",
@@ -11,7 +11,7 @@
   {
     "title": "LB WATCHES",
     "description": "Plataforma web premium de e-commerce e catálogo para a minha marca pessoal de relógios customizados. Interface desenvolvida com foco num design de alta relojoaria, animações fluidas e experiência imersiva.",
-    "images": ["lbwatches.jpg"],
+    "images": ["lbwatches.png"],
     "tech": ["Next.js", "React", "Tailwind CSS", "Framer Motion", "TypeScript"],
     "platforms": ["web"],
     "link": "https://lbmods.vercel.app",
