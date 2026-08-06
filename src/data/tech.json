@@ -11,32 +11,33 @@
       ]
     },
     {
-      "title": "Ferramentas & Gestão de Projetos",
+      "title": "Ferramentas, Cloud & DevOps",
       "skills": [
         { "name": "GitHub", "level": 3, "icon": "skill-icons:github-dark" },
-        { "name": "Jira", "level": 2, "icon": "devicon:jira" },
-        { "name": "Confluence", "level": 2, "icon": "devicon:confluence" },
+        { "name": "Microsoft Azure", "level": 2, "icon": "skill-icons:azure-dark" },
+        { "name": "Vercel", "level": 3, "icon": "skill-icons:vercel-dark" },
+        { "name": "Jira & Confluence", "level": 2, "icon": "devicon:jira" },
         { "name": "Engenharia de Prompts", "level": 3, "icon": "mdi:robot-outline" }
       ]
     },
     {
       "title": "Bases de Dados & Web",
       "skills": [
-        { "name": "SQL", "level": 3, "icon": "skill-icons:mysql-dark" },
-        { "name": "JavaScript", "level": 2, "icon": "skill-icons:javascript" },
-        { "name": "HTML5", "level": 2, "icon": "skill-icons:html" },
-        { "name": "CSS3", "level": 2, "icon": "skill-icons:css" },
+        { "name": "SQL Server", "level": 3, "icon": "skill-icons:mysql-dark" },
+        { "name": "Next.js & React", "level": 3, "icon": "skill-icons:nextjs-dark" },
+        { "name": "TypeScript", "level": 2, "icon": "skill-icons:typescript" },
+        { "name": "Tailwind CSS", "level": 3, "icon": "skill-icons:tailwindcss-dark" },
         { "name": "UI/UX & Mockups", "level": 2, "icon": "skill-icons:figma-dark" }
       ]
     },
     {
-      "title": "Sistemas, Redes & Mobile",
+      "title": "Sistemas, Mobile & IoT",
       "skills": [
-        { "name": "C (Sistemas Operativos)", "level": 2, "icon": "skill-icons:c" },
-        { "name": "Segurança Informática", "level": 2, "icon": "mdi:shield-lock-outline" },
-        { "name": "Redes (Cisco)", "level": 2, "icon": "mdi:router-network" },
+        { "name": "Kotlin (Android)", "level": 2, "icon": "skill-icons:kotlin-dark" },
+        { "name": "MQTT (IoT)", "level": 2, "icon": "mdi:access-point-network" },
         { "name": "Flutter", "level": 1, "icon": "skill-icons:flutter-dark" },
-        { "name": "Android Studio", "level": 1, "icon": "skill-icons:androidstudio-dark" }
+        { "name": "C (Sistemas Operativos)", "level": 2, "icon": "skill-icons:c" },
+        { "name": "Redes (Cisco)", "level": 2, "icon": "mdi:router-network" }
       ]
     }
   ]
