@@ -1,0 +1,62 @@
+---
+import { Icon } from "astro-icon/components";
+import { skills, certifications, languages } from "../data/site";
+---
+
+<section id="skills" class="section border-t border-line">
+  <div class="container-x">
+    <div class="reveal">
+      <p class="eyebrow">Skills</p>
+      <h2 class="h2 mt-3">The toolbox</h2>
+    </div>
+
+    <div class="mt-10 grid gap-px overflow-hidden rounded-3xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
+      {skills.map((g) => (
+        <div class="reveal bg-surface p-6">
+          <h3 class="font-mono text-xs uppercase tracking-[0.16em] text-faint">{g.group}</h3>
+          <div class="mt-4 flex flex-wrap gap-1.5">
+            {g.items.map((s) => <span class="chip !text-ink/85">{s}</span>)}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="mt-16 grid gap-10 lg:grid-cols-[2fr_1fr]">
+      <div class="reveal">
+        <h3 class="font-heading text-xl font-semibold text-ink">Certifications</h3>
+        <ul class="mt-5 divide-y divide-line rounded-2xl border border-line bg-surface">
+          {certifications.map((c) => {
+            const inner = (
+              <>
+                <span class="text-sm text-ink">{c.title}</span>
+                <span class="flex items-center gap-3 text-xs text-faint">
+                  {c.issuer}{c.hours && <span class="font-mono">{c.hours}</span>}
+                  {c.url && <Icon name="mdi:arrow-top-right" class="h-4 w-4 text-muted transition-colors group-hover:text-accent" />}
+                </span>
+              </>
+            );
+            return (
+              <li>
+                {c.url ? (
+                  <a href={c.url} target="_blank" rel="noopener" class="group flex items-center justify-between gap-4 px-5 py-3.5 transition-colors hover:bg-surface-2">{inner}</a>
+                ) : (
+                  <div class="flex items-center justify-between gap-4 px-5 py-3.5">{inner}</div>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+      <div class="reveal">
+        <h3 class="font-heading text-xl font-semibold text-ink">Languages</h3>
+        <ul class="mt-5 space-y-3">
+          {languages.map((l) => (
+            <li class="flex items-center justify-between rounded-2xl border border-line bg-surface px-5 py-4">
+              <span class="text-sm text-ink">{l.name}</span><span class="text-xs text-muted">{l.level}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

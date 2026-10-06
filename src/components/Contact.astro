@@ -1,0 +1,36 @@
+---
+import { Icon } from "astro-icon/components";
+import { profile } from "../data/site";
+const year = new Date().getFullYear();
+---
+
+<section id="contact" class="section border-t border-line">
+  <div class="container-x">
+    <div class="reveal relative overflow-hidden rounded-3xl border border-line bg-surface px-6 py-14 text-center sm:px-12 md:py-20">
+      <div aria-hidden="true" class="pointer-events-none absolute -bottom-40 left-1/2 h-80 w-[640px] -translate-x-1/2 rounded-full bg-accent/25 blur-[120px]"></div>
+      <p class="eyebrow relative">Contact</p>
+      <h2 class="relative mt-4 font-heading text-4xl font-semibold tracking-tight text-ink md:text-5xl">Let's build something together.</h2>
+      <p class="relative mx-auto mt-4 max-w-lg text-muted">
+        I'm looking for a junior software developer role — full-stack, .NET backend or React/Next.js frontend. {profile.availability}.
+      </p>
+      <div class="relative mt-8 flex flex-wrap justify-center gap-3">
+        <a href={`mailto:${profile.email}`} class="btn-primary"><Icon name="mdi:email-outline" class="h-4 w-4" /> {profile.email}</a>
+        <a href={profile.resumeUrl} target="_blank" rel="noopener" class="btn-ghost"><Icon name="mdi:download" class="h-4 w-4" /> Download CV</a>
+      </div>
+      <div class="relative mt-6 flex justify-center gap-6 text-sm">
+        {profile.socials.map((s) => (
+          <a href={s.url} target="_blank" rel="noopener" class="link-arrow !text-muted hover:!text-ink">
+            <Icon name={s.name === "GitHub" ? "mdi:github" : "mdi:linkedin"} class="h-4 w-4" /> {s.name}
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="border-t border-line py-8">
+  <div class="container-x flex flex-col items-center justify-between gap-2 text-xs text-faint sm:flex-row">
+    <p>© {year} {profile.name}. {profile.location}.</p>
+    <p>Built with Astro and Tailwind CSS · Deployed on Vercel</p>
+  </div>
+</footer>
