@@ -1,0 +1,57 @@
+---
+import { Icon } from "astro-icon/components";
+import { profile } from "../data/site";
+
+const links = [
+  { href: "#work", label: "Work" },
+  { href: "#experience", label: "Experience" },
+  { href: "#skills", label: "Skills" },
+  { href: "#contact", label: "Contact" },
+];
+---
+
+<header class="fixed inset-x-0 top-0 z-40 border-b border-transparent transition-colors duration-300" data-nav>
+  <nav class="container-x flex h-16 items-center justify-between" aria-label="Main">
+    <a href="#top" class="group flex items-center gap-2.5" aria-label="Back to top">
+      <span class="grid h-8 w-8 place-items-center rounded-lg bg-accent font-heading text-sm font-bold text-white transition-transform group-hover:-rotate-6">LB</span>
+      <span class="hidden font-heading text-sm font-medium text-ink sm:inline">{profile.name}</span>
+    </a>
+
+    <ul class="hidden items-center gap-8 md:flex">
+      {links.map((l) => (
+        <li><a href={l.href} class="text-sm text-muted transition-colors hover:text-ink">{l.label}</a></li>
+      ))}
+    </ul>
+
+    <div class="flex items-center gap-2">
+      <a href={profile.resumeUrl} target="_blank" rel="noopener" class="btn-ghost !px-4 !py-2">
+        <Icon name="mdi:file-document-outline" class="h-4 w-4" /> Resume
+      </a>
+      <details class="relative md:hidden">
+        <summary class="grid h-9 w-9 cursor-pointer list-none place-items-center rounded-full border border-line text-ink [&::-webkit-details-marker]:hidden" aria-label="Open menu">
+          <Icon name="mdi:menu" class="h-5 w-5" />
+        </summary>
+        <ul class="absolute right-0 mt-2 w-44 rounded-2xl border border-line bg-surface p-2 shadow-2xl">
+          {links.map((l) => (
+            <li><a href={l.href} class="block rounded-xl px-3 py-2 text-sm text-muted hover:bg-surface-2 hover:text-ink">{l.label}</a></li>
+          ))}
+        </ul>
+      </details>
+    </div>
+  </nav>
+</header>
+
+<script>
+  const nav = document.querySelector("[data-nav]");
+  const onScroll = () => {
+    const scrolled = window.scrollY > 12;
+    nav?.classList.toggle("bg-bg/80", scrolled);
+    nav?.classList.toggle("backdrop-blur-md", scrolled);
+    nav?.classList.toggle("border-line", scrolled);
+  };
+  onScroll();
+  window.addEventListener("scroll", onScroll, { passive: true });
+  document.querySelectorAll("details a").forEach((a) =>
+    a.addEventListener("click", () => a.closest("details")?.removeAttribute("open"))
+  );
+</script>
