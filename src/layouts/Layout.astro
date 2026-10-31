@@ -10,7 +10,7 @@ interface Props {
 
 const {
   title = `${profile.name} — ${profile.role}`,
-  description = `${profile.name}, ${profile.role.toLowerCase()} based in ${profile.location}. ${profile.focus}. ${profile.availability}.`,
+  description = `${profile.name}, ${profile.role.toLowerCase()} based in ${profile.location}. ${profile.focus}. Projects: Seatly, Flipora and LBWATCHES. Open to work from November 2026.`,
 } = Astro.props;
 
 const og = `${profile.siteUrl}/og-image.jpg`;
@@ -21,7 +21,8 @@ const og = `${profile.siteUrl}/og-image.jpg`;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="icon" type="image/png" sizes="64x64" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="canonical" href={profile.siteUrl} />
     <title>{title}</title>
     <meta name="description" content={description} />
@@ -32,6 +33,9 @@ const og = `${profile.siteUrl}/og-image.jpg`;
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={og} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${profile.name}, ${profile.role}`} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />

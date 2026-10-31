@@ -11,11 +11,12 @@ const year = new Date().getFullYear();
       <p class="eyebrow relative">Contact</p>
       <h2 class="relative mt-4 font-heading text-4xl font-semibold tracking-tight text-ink md:text-5xl">Let's build something together.</h2>
       <p class="relative mx-auto mt-4 max-w-lg text-muted">
-        I'm looking for a junior software developer role — full-stack, .NET backend or React/Next.js frontend. {profile.availability}.
+        I'm looking for a junior software developer role: full-stack, .NET backend or React/Next.js frontend. Available from November 2026, on-site or hybrid in the Lisbon area, or remote.
       </p>
       <div class="relative mt-8 flex flex-wrap justify-center gap-3">
         <a href={`mailto:${profile.email}`} class="btn-primary"><Icon name="mdi:email-outline" class="h-4 w-4" /> {profile.email}</a>
-        <a href={profile.resumeUrl} target="_blank" rel="noopener" class="btn-ghost"><Icon name="mdi:download" class="h-4 w-4" /> Download CV</a>
+        <a href={profile.resumeUrl} target="_blank" rel="noopener" class="btn-ghost"><Icon name="mdi:download" class="h-4 w-4" /> CV (English)</a>
+        <a href={profile.resumePtUrl} target="_blank" rel="noopener" class="btn-ghost" hreflang="pt"><Icon name="mdi:download" class="h-4 w-4" /> CV (Português)</a>
       </div>
       <div class="relative mt-6 flex justify-center gap-6 text-sm">
         {profile.socials.map((s) => (

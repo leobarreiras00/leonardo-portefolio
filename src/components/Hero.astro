@@ -36,6 +36,7 @@ import { profile, stats } from "../data/site";
         <a href={profile.resumeUrl} target="_blank" rel="noopener" class="btn-ghost">
           <Icon name="mdi:download" class="h-4 w-4" /> Download CV
         </a>
+        <a href={profile.resumePtUrl} target="_blank" rel="noopener" class="text-sm text-muted underline-offset-4 hover:text-ink hover:underline" hreflang="pt">CV em português</a>
         <div class="ml-1 flex items-center gap-1">
           {profile.socials.map((s) => (
             <a href={s.url} target="_blank" rel="noopener" aria-label={s.name} class="grid h-10 w-10 place-items-center rounded-full text-muted transition-colors hover:bg-surface-2 hover:text-ink">
@@ -52,7 +53,7 @@ import { profile, stats } from "../data/site";
         <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-bg via-bg/70 to-transparent p-5 pt-16">
           <dl class="grid grid-cols-2 gap-3 text-sm">
             <div><dt class="text-faint text-xs">Based in</dt><dd class="text-ink">{profile.location}</dd></div>
-            <div><dt class="text-faint text-xs">Currently</dt><dd class="text-ink">Intern @ 4ITFUTURE</dd></div>
+            <div><dt class="text-faint text-xs">Currently</dt><dd class="text-ink">{profile.currently}</dd></div>
           </dl>
         </div>
       </div>

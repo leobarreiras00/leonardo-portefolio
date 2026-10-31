@@ -1,104 +1,31 @@
-# CareerPortfolio: Data-Driven Astro SSG
-Live Demo: [careerportofio.netlify.app](https://careerportofio.netlify.app)
+# Leonardo Barreiras · Portfolio
 
-[![Astro](https://img.shields.io/badge/Astro-FF5D01?logo=astro&logoColor=white)](https://astro.build/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Contributions Welcome](https://img.shields.io/badge/🤝_Contributions-Welcome-blue)](CONTRIBUTING.md)
+Personal portfolio of **Leonardo Barreiras**, Junior Software Developer (full-stack .NET, Next.js & Android).
 
-A high-performance, responsive portfolio built with **Astro**, **Tailwind CSS**, and **Native Browser Animations**. Designed to be 100% data-driven and easy to customize as a reusable template.
+**Live:** [leonardo-barreiras.vercel.app](https://leonardo-barreiras.vercel.app) · **LinkedIn:** [in/leonardo-barreiras](https://www.linkedin.com/in/leonardo-barreiras/)
 
-## 🌟 Highlights
-- **Zero-JS by Default:** Leveraging Astro's islands architecture.
-- **JSON-First:** Update your information in `src/data/` without touching any code.
-- **Built-in Themes**: Switch between multiple professional color palettes and light/dark modes from a single config file.
-- **Fully Responsive:** Optimized for mobile, tablet, and desktop.
-- **Performance:** Optimized for perfect Lighthouse scores.
+## Featured work
 
-## 🛠️ Tech Stack
-- **Frontend:** [Astro](https://astro.build/) (Static Site Generation)
-- **Styling:** [Tailwind CSS](https://tailwindcss.com/)
-- **Icons:** [Iconify](https://iconify.design/) via `astro-icon`
-- **Deployment:** [Netlify](https://www.netlify.com)
-- **Backend:** [FastAPI](https://fastapi.tiangolo.com/) *(Works without backend — open source release coming soon)*
+| Project | What it is | Stack |
+| --- | --- | --- |
+| **Seatly** | Event seating and guest management platform built for a real client during my internship at 4ITHOLDING (INNOVANOW): REST API, web back office and Android app. 74 functional requirements across 4 Scrum sprints. | .NET 10, C#, EF Core, Next.js, TypeScript, Kotlin, PostgreSQL, MQTT, GitHub Actions |
+| **Flipora** | Personal tool that watches OLX, Vinted, Standvirtual and CustoJusto, values listings against real market data and sends Telegram alerts within about a minute. | TypeScript, Cloudflare Workers, Next.js 16, Supabase (PostgreSQL), Telegram Bot API |
+| **LBWATCHES** | Catalog and storefront for my own custom watch brand, live at [lbwatches.pt](https://lbwatches.pt). | Next.js 14, TypeScript, Tailwind CSS, Framer Motion |
+| **CareSync** | Academic team project: care home management platform deployed on Azure. | ASP.NET Core MVC, Angular, EF Core, SQL Server, Azure |
 
-## 🚀 Getting Started
-Follow these instructions to get a local copy up and running.
+Seatly, Flipora and CareSync are private repositories (client, personal and team projects). I'm happy to walk through the code in an interview.
 
-### Prerequisites
-Make sure you have **Astro v6** and **Node.js** (v22.12.0 or higher) installed on your machine.
+## About this site
 
-### Installation
-1. Click **Use this template** on this repository.
-2. Choose **Create a new repository**.
-3. Clone your new repository: `git clone <your-repo-url>`
-4. Navigate to your repo: `cd <your-repo-name>`
-5. Install dependencies: `npm install`
-6. Start development server: `npm run dev`
-7. Update your content in `/src/data/`
-8. Build and deploy on your preferred platform
+- [Astro](https://astro.build/) static site, styled with [Tailwind CSS](https://tailwindcss.com/) 4
+- All content lives in [`src/data/site.ts`](src/data/site.ts); components only render it
+- Optimised images (`astro:assets`), Open Graph and JSON-LD metadata, Vercel Analytics
+- Deployed on Vercel
 
-
-## 🛠️ How to Customize
-To make this portfolio yours, simply edit the JSON files in `src/data/`.
-
-### 🎨 Switching Themes
-This template comes with multiple built-in color palettes. To change the theme of your portfolio, open `src/config.ts` and update the `baseTheme` variable to one of the available options:
-
-```typescript
-export const SITE_CONFIG = {
-  // Options: 'default', 'strategic', 'innovator', 'executive'
-  baseTheme: 'default', 
-};
-```
-*(The template will automatically handle the dark/light mode toggles for whichever base theme you choose!)*
-
-### 📁 Directory Structure
-```
-├── public/              # Static assets (placeholder.jpg, favicon)
-├── src/
-│   ├── components/      # Reusable Astro components
-│   ├── data/            # JSON files for project data
-│   ├── layouts/         # Layout templates with Meta tags
-│   ├── pages/           # Site routes (index.astro)
-│   └── styles/          # global css styles
-│   └── config.ts        # Global site configuration
-├── astro.config.mjs     # Astro configuration
-└── tsconfig.json        # Typescript configuration
+```bash
+npm install
+npm run dev     # local dev server
+npm run build   # production build in dist/
 ```
 
-
-
-
-#### Useful commands and links for reference:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-Tailwind CSS: `npx astro add tailwind`
-
-Inter font: `npm install @fontsource-variable/inter` 
-
-Space Grotesk font: `npm install @fontsource-variable/space-grotesk`
-
-Astro-icon: `npx astro add astro-icon`
-
-Material Desing Icons: `npm install @iconify-json/mdi`
-
-https://docs.astro.build/en/guides/styling/#add-tailwind-4
-
-https://www.astroicon.dev
-
-https://icon-sets.iconify.design/mdi/?category=Material
-
-## 🤝 Contributing
-Contributions are welcome!  
-Please read the [Contributing Guide](CONTRIBUTING.md) before opening a PR.
-
-## 📝 License
-This project is licensed under the [MIT License](LICENSE)
+Built on top of an open-source Astro portfolio template (MIT licence, see [LICENSE](LICENSE)).
