@@ -1,0 +1,871 @@
+---
+// Interactive product showcase for Flipora (private SaaS, so the screens are the proof).
+// Screens are read from /public/flipora/. Anything missing renders a placeholder
+// with the expected file name instead of a broken image.
+import { Icon } from "astro-icon/components";
+
+type Fact = { k: string; v: string };
+type Shot = { label?: string; dark: string; light?: string; caption: string; facts?: Fact[] };
+type Mod = { label: string; kind: "phone" | "desktop"; shots: Shot[] };
+
+const B = "/flipora/";
+
+const modules: Mod[] = [
+  {
+    label: "Live Feed",
+    kind: "phone",
+    shots: [
+      {
+        dark: B + "feed-dark.png",
+        light: B + "feed-light.png",
+        caption:
+          "Multi-category arbitrage feed (iPhones, Watches, Cars, Clothes) with Apple-inspired Liquid Glass navigation and instant net profit.",
+        facts: [
+          { k: "iPhone listings", v: "42" },
+          { k: "Good deals", v: "19" },
+          { k: "Best net profit", v: "+248 €" },
+        ],
+      },
+    ],
+  },
+  {
+    label: "Quick-Peek & NLP",
+    kind: "phone",
+    shots: [
+      {
+        dark: B + "quickpeek-dark.png",
+        caption:
+          "Native iOS-style bottom-sheet comparing Worten/Fnac trade-in vs. private market value, seller trust score (90/100) and logistics cost.",
+        facts: [
+          { k: "Worten trade-in", v: "550 €" },
+          { k: "Market value", v: "580 €" },
+          { k: "Net profit", v: "+218 €" },
+          { k: "Seller trust", v: "90/100" },
+        ],
+      },
+    ],
+  },
+  {
+    label: "Market & Curves",
+    kind: "phone",
+    shots: [
+      {
+        dark: B + "market-dark.png",
+        light: B + "market-light.png",
+        caption:
+          "Econometric engine built from 1,157+ prices across 949 private sellers, 12-week depreciation curves (-25%) and trade-in vs. direct sale delta (+181 €).",
+        facts: [
+          { k: "Prices analysed", v: "1,157" },
+          { k: "Private sellers", v: "949" },
+          { k: "Direct sale vs trade-in", v: "+181 €" },
+          { k: "12-week trend", v: "-25%" },
+        ],
+      },
+    ],
+  },
+  {
+    label: "Deals & P&L",
+    kind: "phone",
+    shots: [
+      {
+        label: "In Prep (#2)",
+        dark: B + "deals-prep-dark.png",
+        caption:
+          "Kanban Prep stage: iPhone 17 Pro Max (700 € cost, +400 € est. margin) & 1,050 € active stock capital.",
+        facts: [
+          { k: "Item", v: "iPhone 17 Pro Max" },
+          { k: "Cost", v: "700 €" },
+          { k: "Est. margin", v: "+400 €" },
+          { k: "Stock capital", v: "1,050 €" },
+        ],
+      },
+      {
+        label: "Bought (#3)",
+        dark: B + "deals-bought-dark.png",
+        caption:
+          "Kanban Bought stage: iPhone 15 Pro Max (350 € cost, +250 € est. margin) with 1-tap stage transitions & delete.",
+        facts: [
+          { k: "Item", v: "iPhone 15 Pro Max" },
+          { k: "Cost", v: "350 €" },
+          { k: "Est. margin", v: "+250 €" },
+        ],
+      },
+      {
+        label: "Monthly ROI",
+        dark: B + "deals-roi-dark.png",
+        caption:
+          "Realized P&L chart (+180 € net profit, 43% ROI, 0-day turnaround) broken down across all 4 categories.",
+        facts: [
+          { k: "Net profit", v: "+180 €" },
+          { k: "ROI", v: "43%" },
+          { k: "Avg. time to sell", v: "0 days" },
+        ],
+      },
+      {
+        label: "DAC7 & Sold",
+        dark: B + "deals-dac7-dark.png",
+        caption:
+          "Annual tax ledger (1,470 € purchases, 600 € sales), EU DAC7 threshold compliance & 1-click CSV export.",
+        facts: [
+          { k: "Purchases 2026", v: "1,470 € (3)" },
+          { k: "Sales 2026", v: "600 € (1)" },
+          { k: "Net profit", v: "+180 €" },
+          { k: "Export", v: "CSV per year" },
+        ],
+      },
+    ],
+  },
+  {
+    label: "Liquid Glass UI",
+    kind: "phone",
+    shots: [
+      {
+        dark: B + "settings-dark.png",
+        light: B + "settings-light.png",
+        caption:
+          "Custom real-time CSS refraction & blur engine (0–100% transparency slider), instant PT/EN i18n switch and night-silence digest rules.",
+        facts: [
+          { k: "Glass transparency", v: "0–100%" },
+          { k: "Language", v: "PT / EN, instant" },
+          { k: "Themes", v: "Dark & Soft-Grey" },
+          { k: "Telegram", v: "Mute + night silence" },
+        ],
+      },
+    ],
+  },
+  {
+    label: "SaaS & RBAC",
+    kind: "phone",
+    shots: [
+      {
+        dark: B + "access-dark.png",
+        caption:
+          "Multi-tenant access management with time-boxed 7-day read-only trial accounts and modular category packs (iPhones, Cars, Watches, Clothes).",
+        facts: [
+          { k: "Trial length", v: "7 days" },
+          { k: "Trial access", v: "Read-only" },
+          { k: "Pack options", v: "4" },
+        ],
+      },
+    ],
+  },
+  {
+    label: "Desktop & Cars",
+    kind: "desktop",
+    shots: [
+      {
+        label: "Feed",
+        dark: B + "desktop-feed.jpg",
+        caption: "High-density macOS/Desktop terminal list view.",
+      },
+      {
+        label: "Cars",
+        dark: B + "desktop-cars.jpg",
+        caption:
+          "Dual-benchmark automotive arbitrage: Private vs. Stand price rulers & mileage sweet-spot.",
+      },
+    ],
+  },
+];
+
+// One stacked layer per (module, shot, theme) so theme changes can crossfade.
+const layers = modules.flatMap((m, mi) =>
+  m.shots.flatMap((s, si) =>
+    (["dark", "light"] as const).flatMap((t) => {
+      const url = t === "dark" ? s.dark : s.light;
+      if (!url) return [];
+      const view = s.label ? `, ${s.label}` : "";
+      return [
+        {
+          mi,
+          si,
+          t,
+          url,
+          kind: m.kind,
+          on: mi === 0 && si === 0 && t === "dark",
+          alt: m.kind === "desktop" ? `Flipora desktop view${view}` : `Flipora ${m.label}${view}, ${t} theme`,
+        },
+      ];
+    }),
+  ),
+);
+const phoneLayers = layers.filter((l) => l.kind === "phone");
+const desktopLayers = layers.filter((l) => l.kind === "desktop");
+
+const first = modules[0].shots[0];
+---
+
+<div class="fl-showcase" data-flipora-showcase data-theme="dark" data-config={JSON.stringify(modules)}>
+  <!-- Module selector: segmented pills with a sliding indicator, swipeable on mobile -->
+  <div class="px-4 pt-4 sm:px-6 sm:pt-6">
+    <div class="overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" data-fl-nav-scroll>
+      <div class="relative mx-auto flex w-max gap-1 rounded-full border border-line bg-bg/60 p-1" role="tablist" aria-label="Flipora modules" data-fl-tablist>
+        <span class="fl-indicator pointer-events-none absolute bottom-1 left-0 top-1 w-0 rounded-full bg-white/10 ring-1 ring-white/10" aria-hidden="true" data-fl-indicator></span>
+        {modules.map((m, i) => (
+          <button
+            type="button"
+            role="tab"
+            id={`fl-tab-${i}`}
+            aria-selected={i === 0 ? "true" : "false"}
+            aria-controls="fl-panel"
+            tabindex={i === 0 ? 0 : -1}
+            data-fl-tab={i}
+            class="relative z-10 shrink-0 whitespace-nowrap rounded-full px-3.5 py-2 text-sm font-medium text-muted transition-colors duration-200 ease-smooth hover:text-ink aria-selected:text-ink"
+          >{m.label}</button>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <div id="fl-panel" role="tabpanel" aria-labelledby="fl-tab-0" data-fl-panel class="px-4 pb-6 pt-4 sm:px-6 sm:pb-8">
+    <!-- Sub-views on the left, Dark/Light toggle on the top right of the showcase -->
+    <div class="flex min-h-9 items-center justify-between gap-3">
+      <div class="min-w-0 flex-1 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" data-fl-subs></div>
+      <div class="shrink-0" data-fl-theme-slot></div>
+    </div>
+
+    <div class="mt-2 grid items-center gap-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:gap-14">
+      <div class="relative">
+        <div class="relative touch-pan-y" data-fl-stage>
+          <div aria-hidden="true" class="pointer-events-none absolute left-1/2 top-1/2 h-[78%] w-[78%] max-w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-emerald-500/[0.07] blur-2xl"></div>
+
+          <div class="relative grid w-full place-items-center py-2">
+            <!-- Phone -->
+            <div class="fl-device is-on" data-fl-device="phone">
+              <div class="relative w-[288px] rounded-[2.6rem] border border-white/15 bg-gradient-to-b from-[#1c1f29] to-[#090a0f] p-[9px] shadow-[0_32px_64px_-24px_rgba(0,0,0,0.8),inset_0_1px_0_0_rgba(255,255,255,0.14)] sm:w-[312px] lg:w-[330px]">
+                <span aria-hidden="true" class="absolute -left-[3px] top-[84px] h-7 w-[3px] rounded-l-sm bg-white/15"></span>
+                <span aria-hidden="true" class="absolute -left-[3px] top-[128px] h-12 w-[3px] rounded-l-sm bg-white/15"></span>
+                <span aria-hidden="true" class="absolute -left-[3px] top-[188px] h-12 w-[3px] rounded-l-sm bg-white/15"></span>
+                <span aria-hidden="true" class="absolute -right-[3px] top-[148px] h-[76px] w-[3px] rounded-r-sm bg-white/15"></span>
+                <div class="relative overflow-hidden rounded-[2.1rem] bg-surface ring-1 ring-black/70" style="aspect-ratio: 900 / 1829">
+                  {phoneLayers.map((l) => (
+                    <div class={`fl-layer${l.on ? " is-on" : ""}`} data-m={l.mi} data-s={l.si} data-t={l.t} aria-hidden={l.on ? "false" : "true"}>
+                      <img src={l.on ? l.url : undefined} data-src={l.url} alt={l.alt} width="900" height="1829" decoding="async" draggable="false" />
+                      <div class="fl-missing" role="img" aria-label={`Screenshot not added yet: ${l.url}`}>
+                        <Icon name="mdi:image-off-outline" class="h-6 w-6" />
+                        <span>Screenshot not added yet</span>
+                        <code>{l.url}</code>
+                      </div>
+                    </div>
+                  ))}
+                  <button type="button" data-fl-open aria-label="Expand screenshot to full screen" class="absolute inset-0 z-20 cursor-zoom-in rounded-[2.1rem] focus-visible:outline-offset-[-4px]"></button>
+                  <span aria-hidden="true" class="fl-home pointer-events-none absolute bottom-2 left-1/2 z-10 h-1 w-24 -translate-x-1/2 rounded-full"></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Desktop window -->
+            <div class="fl-device" data-fl-device="desktop" inert aria-hidden="true">
+              <div class="w-full max-w-[560px] overflow-hidden rounded-2xl border border-white/15 bg-[#0b0d13] shadow-[0_32px_64px_-24px_rgba(0,0,0,0.8),inset_0_1px_0_0_rgba(255,255,255,0.14)]">
+                <div class="flex items-center gap-1.5 border-b border-white/10 bg-[#10131a] px-3.5 py-2.5">
+                  <span class="h-2.5 w-2.5 rounded-full bg-white/15"></span>
+                  <span class="h-2.5 w-2.5 rounded-full bg-white/15"></span>
+                  <span class="h-2.5 w-2.5 rounded-full bg-white/15"></span>
+                  <span class="ml-3 flex h-5 min-w-0 flex-1 items-center gap-1.5 rounded-md bg-white/[0.05] px-2 text-[10px] text-faint">
+                    <Icon name="mdi:lock-outline" class="h-3 w-3 shrink-0" />
+                    <span class="truncate">Private app, sign-in required</span>
+                  </span>
+                </div>
+                <div class="relative overflow-hidden bg-surface" style="aspect-ratio: 16 / 10">
+                  {desktopLayers.map((l) => (
+                    <div class="fl-layer" data-m={l.mi} data-s={l.si} data-t={l.t} aria-hidden="true">
+                      <img data-src={l.url} alt={l.alt} decoding="async" draggable="false" />
+                      <div class="fl-missing" role="img" aria-label={`Screenshot not added yet: ${l.url}`}>
+                        <Icon name="mdi:image-off-outline" class="h-6 w-6" />
+                        <span>Screenshot not added yet</span>
+                        <code>{l.url}</code>
+                      </div>
+                    </div>
+                  ))}
+                  <button type="button" data-fl-open aria-label="Expand screenshot to full screen" class="absolute inset-0 z-20 cursor-zoom-in focus-visible:outline-offset-[-4px]"></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Previous / next + module dots -->
+        <div class="mt-5 flex items-center justify-center gap-3">
+          <button type="button" data-fl-prev aria-label="Previous module" class="grid h-10 w-10 place-items-center rounded-full border border-line text-muted transition-all duration-200 ease-smooth hover:border-white/20 hover:bg-white/[0.03] hover:text-ink">
+            <Icon name="mdi:chevron-left" class="h-5 w-5" />
+          </button>
+          <div class="flex items-center" role="group" aria-label="Choose module">
+            {modules.map((m, i) => (
+              <button type="button" class="fl-dot" data-fl-dot={i} aria-label={m.label} aria-current={i === 0 ? "true" : "false"}><span></span></button>
+            ))}
+          </div>
+          <button type="button" data-fl-next aria-label="Next module" class="grid h-10 w-10 place-items-center rounded-full border border-line text-muted transition-all duration-200 ease-smooth hover:border-white/20 hover:bg-white/[0.03] hover:text-ink">
+            <Icon name="mdi:chevron-right" class="h-5 w-5" />
+          </button>
+        </div>
+      </div>
+
+      <!-- Spec column -->
+      <div class="min-w-0" aria-live="polite" data-fl-spec>
+        <h3 class="font-heading text-2xl font-semibold text-ink sm:text-3xl" data-fl-title>{modules[0].label}</h3>
+        <p class="mt-3 max-w-md text-base leading-relaxed text-muted" data-fl-caption>{first.caption}</p>
+        <dl class="mt-6 grid max-w-md grid-cols-2 gap-x-6 gap-y-4 border-t border-line pt-5 text-sm" data-fl-facts hidden={!first.facts?.length}>
+          {(first.facts ?? []).map((f) => (
+            <div class="min-w-0">
+              <dt class="text-xs text-faint">{f.k}</dt>
+              <dd class="mt-0.5 font-heading text-base text-ink">{f.v}</dd>
+            </div>
+          ))}
+        </dl>
+        <div class="mt-6">
+          <button type="button" data-fl-open class="btn-ghost">
+            <Icon name="mdi:magnify-plus-outline" class="h-4 w-4" /> Expand screen
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Full-screen viewer -->
+  <dialog data-fl-lightbox aria-label="Flipora screenshot viewer" class="fl-lightbox m-0 h-full max-h-none w-full max-w-none overflow-hidden border-0 bg-black/85 p-0 text-ink backdrop-blur-xl">
+    <button type="button" data-fl-close aria-label="Close viewer" class="fl-lb-btn absolute right-4 top-4 z-20 grid h-11 w-11 place-items-center rounded-full border border-white/15 bg-black/40 text-ink transition-all duration-200 ease-smooth hover:border-white/30 hover:bg-white/10">
+      <Icon name="mdi:close" class="h-5 w-5" />
+    </button>
+    <button type="button" data-fl-prev aria-label="Previous module" class="fl-lb-btn absolute left-3 top-1/2 z-20 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full border border-white/15 bg-black/40 text-ink transition-all duration-200 ease-smooth hover:border-white/30 hover:bg-white/10">
+      <Icon name="mdi:chevron-left" class="h-6 w-6" />
+    </button>
+    <button type="button" data-fl-next aria-label="Next module" class="fl-lb-btn absolute right-3 top-1/2 z-20 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full border border-white/15 bg-black/40 text-ink transition-all duration-200 ease-smooth hover:border-white/30 hover:bg-white/10">
+      <Icon name="mdi:chevron-right" class="h-6 w-6" />
+    </button>
+
+    <div class="fl-lb-inner flex h-full w-full touch-pan-y flex-col items-center gap-6 overflow-y-auto px-5 py-16 sm:px-20 lg:flex-row lg:justify-center lg:gap-14 lg:py-8" data-fl-lb-inner data-kind="phone">
+      <div class="relative flex shrink-0 items-center justify-center" data-fl-lb-figure>
+        <img data-fl-lb-img alt="" class="fl-lb-img block rounded-[1.75rem] border border-white/10 bg-surface shadow-2xl shadow-black/60" />
+        <div data-fl-lb-missing hidden class="flex h-[50dvh] w-[min(80vw,22rem)] flex-col items-center justify-center gap-2 rounded-[1.75rem] border border-dashed border-white/20 p-6 text-center text-sm text-muted">
+          <Icon name="mdi:image-off-outline" class="h-7 w-7" />
+          <span>Screenshot not added yet</span>
+          <code class="break-all font-mono text-xs text-faint" data-fl-lb-missing-name></code>
+        </div>
+      </div>
+
+      <div class="w-full max-w-sm lg:max-w-md">
+        <h3 class="font-heading text-2xl font-semibold text-ink sm:text-3xl" data-fl-title>{modules[0].label}</h3>
+        <p class="mt-3 text-base leading-relaxed text-muted" data-fl-caption>{first.caption}</p>
+        <dl class="mt-5 grid grid-cols-2 gap-x-6 gap-y-4 border-t border-white/10 pt-5 text-sm" data-fl-facts hidden={!first.facts?.length}></dl>
+        <div class="mt-6 flex flex-wrap items-center gap-3">
+          <div class="min-w-0 max-w-full overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" data-fl-subs></div>
+          <div data-fl-theme-slot></div>
+        </div>
+        <p class="mt-6 hidden text-xs text-faint lg:block">Use ← → to switch modules, Esc to close.</p>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Cloned into both theme slots by the script -->
+  <template data-fl-tpl="theme">
+    <div class="inline-flex items-center">
+      <div class="inline-flex items-center gap-0.5 rounded-full border border-line bg-bg/60 p-1" role="group" aria-label="Screenshot theme" data-fl-toggle>
+        <button type="button" data-fl-theme="dark" aria-pressed="true" aria-label="Dark theme" class="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1.5 text-xs font-medium text-muted transition-all duration-200 ease-smooth hover:text-ink aria-pressed:bg-white/10 aria-pressed:text-ink">
+          <Icon name="mdi:weather-night" class="h-4 w-4" /><span class="hidden sm:inline">Dark</span>
+        </button>
+        <button type="button" data-fl-theme="light" aria-pressed="false" aria-label="Soft-grey light theme" class="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1.5 text-xs font-medium text-muted transition-all duration-200 ease-smooth hover:text-ink aria-pressed:bg-white/10 aria-pressed:text-ink">
+          <Icon name="mdi:white-balance-sunny" class="h-4 w-4" /><span class="hidden sm:inline">Light</span>
+        </button>
+      </div>
+      <span class="chip gap-1.5" data-fl-chip hidden><Icon name="mdi:weather-night" class="h-3.5 w-3.5" /> Dark view</span>
+    </div>
+  </template>
+</div>
+
+<style is:global>
+  .fl-showcase {
+    --fl-ease: var(--ease-smooth, cubic-bezier(0.22, 1, 0.36, 1));
+  }
+
+  /* Device frames: only one is visible, both share the same grid cell */
+  .fl-device {
+    grid-area: 1 / 1;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    opacity: 0;
+    transform: scale(0.985);
+    pointer-events: none;
+    transition: opacity 200ms var(--fl-ease), transform 200ms var(--fl-ease);
+  }
+  .fl-device.is-on {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+
+  /* Screenshot layers: crossfade with a tiny scale (0.99 to 1) */
+  .fl-layer {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transform: scale(0.99);
+    pointer-events: none;
+    transition: opacity 200ms var(--fl-ease), transform 200ms var(--fl-ease);
+  }
+  .fl-layer.is-on {
+    opacity: 1;
+    transform: none;
+  }
+  .fl-layer img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    -webkit-user-drag: none;
+    user-select: none;
+  }
+  .fl-missing {
+    display: none;
+    position: absolute;
+    inset: 0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1.25rem;
+    text-align: center;
+    font-size: 0.8125rem;
+    line-height: 1.4;
+    color: var(--color-muted, #9aa1b2);
+    background: var(--color-surface, #12141a);
+  }
+  .fl-missing code {
+    max-width: 100%;
+    word-break: break-all;
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.7rem;
+    color: var(--color-faint, #6b7183);
+  }
+  .fl-layer.is-missing img {
+    display: none;
+  }
+  .fl-layer.is-missing .fl-missing {
+    display: flex;
+  }
+
+  /* Home indicator follows the screenshot theme */
+  .fl-home {
+    background: rgba(255, 255, 255, 0.42);
+  }
+  .fl-showcase[data-theme="light"] .fl-home {
+    background: rgba(11, 12, 16, 0.5);
+  }
+
+  /* Sliding pill indicator */
+  .fl-indicator {
+    opacity: 0;
+    transition: none;
+  }
+  .fl-indicator.is-ready {
+    opacity: 1;
+    transition: transform 300ms var(--fl-ease), width 300ms var(--fl-ease);
+  }
+
+  /* Module dots */
+  .fl-dot {
+    display: grid;
+    height: 2rem;
+    place-items: center;
+    padding: 0 0.25rem;
+  }
+  .fl-dot span {
+    display: block;
+    height: 0.375rem;
+    width: 0.375rem;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.25);
+    transition: width 200ms var(--fl-ease), background-color 200ms var(--fl-ease);
+  }
+  .fl-dot:hover span {
+    background: rgba(255, 255, 255, 0.5);
+  }
+  .fl-dot[aria-current="true"] span {
+    width: 1.25rem;
+    background: var(--color-ink, #f3f5fa);
+  }
+
+  /* Text swap when the module or view changes */
+  @keyframes fl-spec-in {
+    from {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+  }
+  .fl-spec-in {
+    animation: fl-spec-in 260ms var(--fl-ease) both;
+  }
+
+  /* Lightbox */
+  .fl-lightbox {
+    opacity: 0;
+    transition: opacity 200ms var(--fl-ease);
+  }
+  .fl-lightbox[open] {
+    opacity: 1;
+  }
+  @starting-style {
+    .fl-lightbox[open] {
+      opacity: 0;
+    }
+  }
+  .fl-lightbox::backdrop {
+    background: transparent;
+  }
+  html.fl-lb-open {
+    overflow: hidden;
+  }
+  .fl-lb-img {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 62dvh;
+    transition: opacity 200ms var(--fl-ease), transform 200ms var(--fl-ease);
+  }
+  .fl-lb-img.is-swapping {
+    opacity: 0;
+    transform: scale(0.99);
+  }
+  @media (min-width: 1024px) {
+    .fl-lb-img {
+      max-height: calc(100dvh - 6rem);
+    }
+  }
+  .fl-lb-inner[data-kind="desktop"] {
+    flex-direction: column;
+  }
+  .fl-lb-inner[data-kind="desktop"] .fl-lb-img {
+    max-width: min(92vw, 60rem);
+    max-height: 62dvh;
+  }
+</style>
+
+<script>
+  type Fact = { k: string; v: string };
+  type Shot = { label?: string; dark: string; light?: string; caption: string; facts?: Fact[] };
+  type Mod = { label: string; kind: "phone" | "desktop"; shots: Shot[] };
+  type Theme = "dark" | "light";
+
+  const SUB_CLASS =
+    "whitespace-nowrap rounded-full px-3 py-1.5 text-xs font-medium text-muted transition-all duration-200 ease-smooth hover:text-ink aria-pressed:bg-white/10 aria-pressed:text-ink";
+
+  function initShowcase(root: HTMLElement) {
+    const mods: Mod[] = JSON.parse(root.dataset.config || "[]");
+    if (!mods.length) return;
+
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const q = <T extends HTMLElement = HTMLElement>(sel: string) => root.querySelector<T>(sel);
+    const qa = <T extends HTMLElement = HTMLElement>(sel: string) => Array.from(root.querySelectorAll<T>(sel));
+
+    // Elements
+    const tablist = q("[data-fl-tablist]")!;
+    const navScroll = q("[data-fl-nav-scroll]")!;
+    const indicator = q("[data-fl-indicator]")!;
+    const tabs = qa("[data-fl-tab]");
+    const dots = qa("[data-fl-dot]");
+    const devices = qa("[data-fl-device]");
+    const layers = qa(".fl-layer");
+    const panel = q("#fl-panel")!;
+    const stage = q("[data-fl-stage]")!;
+    const titleEls = qa("[data-fl-title]");
+    const captionEls = qa("[data-fl-caption]");
+    const factsEls = qa("[data-fl-facts]");
+    const subsEls = qa("[data-fl-subs]");
+    const specEls = qa("[data-fl-title], [data-fl-caption], [data-fl-facts]");
+    const lb = q<HTMLDialogElement>("[data-fl-lightbox]")!;
+    const lbInner = q("[data-fl-lb-inner]")!;
+    const lbImg = q<HTMLImageElement>("[data-fl-lb-img]")!;
+    const lbMissing = q("[data-fl-lb-missing]")!;
+    const lbMissingName = q("[data-fl-lb-missing-name]")!;
+
+    // Theme toggle (cloned into the stage and the viewer)
+    const tpl = q<HTMLTemplateElement>('template[data-fl-tpl="theme"]')!;
+    qa("[data-fl-theme-slot]").forEach((slot) => slot.appendChild(tpl.content.cloneNode(true)));
+    const toggles = qa("[data-fl-toggle]");
+    const chips = qa("[data-fl-chip]");
+    const themeBtns = qa("[data-fl-theme]");
+
+    // State
+    let m = 0;
+    let lastM = -1;
+    let theme: Theme = "dark";
+    const shotIdx = mods.map(() => 0);
+    let swiped = false;
+
+    const layerMap = new Map<string, HTMLElement>();
+    layers.forEach((l) => layerMap.set(`${l.dataset.m}:${l.dataset.s}:${l.dataset.t}`, l));
+
+    const curShot = () => mods[m].shots[shotIdx[m]];
+    const effTheme = (): Theme => (curShot().light ? theme : "dark");
+    const urlFor = (s: Shot, t: Theme) => (t === "light" && s.light ? s.light : s.dark);
+
+    // Images load on demand; missing files fall back to a placeholder
+    function load(layer?: HTMLElement | null) {
+      const img = layer?.querySelector("img");
+      if (img && !img.getAttribute("src") && img.dataset.src) img.src = img.dataset.src;
+    }
+    layers.forEach((l) => {
+      const img = l.querySelector("img");
+      if (!img) return;
+      img.addEventListener("error", () => l.classList.add("is-missing"));
+      if (img.getAttribute("src") && img.complete && img.naturalWidth === 0) l.classList.add("is-missing");
+    });
+    function preload() {
+      const n = mods.length;
+      const th = effTheme();
+      [m, m + 1, m - 1].forEach((x) => {
+        const mi = (x + n) % n;
+        const si = mi === m ? shotIdx[m] : 0;
+        load(layerMap.get(`${mi}:${si}:${th}`) ?? layerMap.get(`${mi}:${si}:dark`));
+      });
+      load(layerMap.get(`${m}:${shotIdx[m]}:${th === "dark" ? "light" : "dark"}`));
+    }
+
+    // Sliding indicator
+    function placeIndicator() {
+      const t = tabs[m];
+      if (!t) return;
+      indicator.style.width = `${t.offsetWidth}px`;
+      indicator.style.transform = `translateX(${t.offsetLeft}px)`;
+    }
+    function revealTab() {
+      const t = tabs[m];
+      const left = t.getBoundingClientRect().left - navScroll.getBoundingClientRect().left + navScroll.scrollLeft;
+      navScroll.scrollTo({ left: left - (navScroll.clientWidth - t.offsetWidth) / 2, behavior: reduce ? "auto" : "smooth" });
+    }
+
+    function buildSubs(mod: Mod) {
+      subsEls.forEach((c) => {
+        c.replaceChildren();
+        if (mod.shots.length < 2) return;
+        const wrap = document.createElement("div");
+        wrap.className = "inline-flex gap-1 rounded-full border border-line bg-bg/60 p-1";
+        wrap.setAttribute("role", "group");
+        wrap.setAttribute("aria-label", `${mod.label} views`);
+        mod.shots.forEach((s, i) => {
+          const b = document.createElement("button");
+          b.type = "button";
+          b.dataset.flShot = String(i);
+          b.className = SUB_CLASS;
+          b.textContent = s.label ?? `View ${i + 1}`;
+          wrap.append(b);
+        });
+        c.append(wrap);
+      });
+    }
+
+    function renderLightbox() {
+      const shot = curShot();
+      const url = urlFor(shot, effTheme());
+      lbInner.dataset.kind = mods[m].kind;
+      lbImg.alt = `Flipora ${mods[m].label}${shot.label ? `, ${shot.label}` : ""}`;
+      if (lbImg.getAttribute("src") === url) return;
+      lbImg.classList.add("is-swapping");
+      window.setTimeout(() => {
+        lbImg.src = url;
+      }, reduce ? 0 : 120);
+      lbImg.onload = () => {
+        lbImg.hidden = false;
+        lbMissing.hidden = true;
+        lbImg.classList.remove("is-swapping");
+      };
+      lbImg.onerror = () => {
+        lbImg.classList.remove("is-swapping");
+        lbImg.hidden = true;
+        lbMissing.hidden = false;
+        lbMissingName.textContent = url;
+      };
+    }
+
+    function render(textChanged = true) {
+      const mod = mods[m];
+      const shot = curShot();
+      const th = effTheme();
+      root.dataset.theme = th;
+
+      tabs.forEach((t, i) => {
+        const on = i === m;
+        t.setAttribute("aria-selected", String(on));
+        t.tabIndex = on ? 0 : -1;
+      });
+      panel.setAttribute("aria-labelledby", `fl-tab-${m}`);
+      placeIndicator();
+      dots.forEach((d, i) => d.setAttribute("aria-current", String(i === m)));
+
+      devices.forEach((d) => {
+        const on = d.dataset.flDevice === mod.kind;
+        d.classList.toggle("is-on", on);
+        d.toggleAttribute("inert", !on);
+        d.setAttribute("aria-hidden", String(!on));
+      });
+      layers.forEach((l) => {
+        const on = Number(l.dataset.m) === m && Number(l.dataset.s) === shotIdx[m] && l.dataset.t === th;
+        if (on) load(l);
+        l.classList.toggle("is-on", on);
+        l.setAttribute("aria-hidden", String(!on));
+      });
+
+      if (textChanged) {
+        titleEls.forEach((e) => (e.textContent = mod.label));
+        captionEls.forEach((e) => (e.textContent = shot.caption));
+        factsEls.forEach((e) => {
+          e.replaceChildren();
+          (shot.facts ?? []).forEach((f) => {
+            const w = document.createElement("div");
+            w.className = "min-w-0";
+            const dt = document.createElement("dt");
+            dt.className = "text-xs text-faint";
+            dt.textContent = f.k;
+            const dd = document.createElement("dd");
+            dd.className = "mt-0.5 font-heading text-base text-ink";
+            dd.textContent = f.v;
+            w.append(dt, dd);
+            e.append(w);
+          });
+          e.hidden = !(shot.facts && shot.facts.length);
+        });
+        specEls.forEach((e) => {
+          e.classList.remove("fl-spec-in");
+          void e.offsetWidth;
+          e.classList.add("fl-spec-in");
+        });
+      }
+
+      if (lastM !== m) buildSubs(mod);
+      lastM = m;
+      qa("[data-fl-shot]").forEach((b) => b.setAttribute("aria-pressed", String(Number(b.dataset.flShot) === shotIdx[m])));
+
+      const canLight = !!shot.light;
+      toggles.forEach((t) => (t.hidden = !canLight));
+      chips.forEach((c) => (c.hidden = canLight || mod.kind === "desktop"));
+      themeBtns.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.flTheme === theme)));
+
+      if (lb.open) renderLightbox();
+      window.setTimeout(preload, 250);
+    }
+
+    function go(i: number) {
+      m = (i + mods.length) % mods.length;
+      render();
+      revealTab();
+    }
+
+    // Lightbox
+    function openLightbox() {
+      if (lb.open) return;
+      renderLightbox();
+      lb.showModal();
+      document.documentElement.classList.add("fl-lb-open");
+    }
+    lb.addEventListener("close", () => document.documentElement.classList.remove("fl-lb-open"));
+    lb.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        go(m - 1);
+      } else if (e.key === "ArrowRight") {
+        e.preventDefault();
+        go(m + 1);
+      }
+    });
+
+    // Clicks (stage and viewer share one handler)
+    root.addEventListener("click", (e) => {
+      const t = e.target as HTMLElement;
+      if (t === lb || t === lbInner) {
+        lb.close();
+        return;
+      }
+      const tab = t.closest<HTMLElement>("[data-fl-tab]");
+      if (tab) return go(Number(tab.dataset.flTab));
+      const dot = t.closest<HTMLElement>("[data-fl-dot]");
+      if (dot) return go(Number(dot.dataset.flDot));
+      if (t.closest("[data-fl-prev]")) return go(m - 1);
+      if (t.closest("[data-fl-next]")) return go(m + 1);
+      const shotBtn = t.closest<HTMLElement>("[data-fl-shot]");
+      if (shotBtn) {
+        shotIdx[m] = Number(shotBtn.dataset.flShot);
+        return render();
+      }
+      const themeBtn = t.closest<HTMLElement>("[data-fl-theme]");
+      if (themeBtn) {
+        theme = themeBtn.dataset.flTheme === "light" ? "light" : "dark";
+        return render(false);
+      }
+      if (t.closest("[data-fl-close]")) return lb.close();
+      if (t.closest("[data-fl-open]")) {
+        if (swiped) return;
+        openLightbox();
+      }
+    });
+
+    // Keyboard: tabs use roving focus; arrows on the screenshot also change module
+    root.addEventListener("keydown", (e) => {
+      if (lb.open) return;
+      const t = e.target as HTMLElement;
+      const dir = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
+      if (t.closest("[data-fl-tablist]")) {
+        let next = -1;
+        if (dir) next = (m + dir + mods.length) % mods.length;
+        else if (e.key === "Home") next = 0;
+        else if (e.key === "End") next = mods.length - 1;
+        if (next < 0) return;
+        e.preventDefault();
+        go(next);
+        tabs[next].focus();
+      } else if (dir && t.closest("[data-fl-stage]")) {
+        e.preventDefault();
+        go(m + dir);
+      }
+    });
+
+    // Horizontal swipe on touch devices
+    function swipe(el: HTMLElement) {
+      let sx = 0;
+      let sy = 0;
+      let t0 = 0;
+      let id = -1;
+      el.addEventListener("pointerdown", (e) => {
+        if (e.pointerType === "mouse") return;
+        id = e.pointerId;
+        sx = e.clientX;
+        sy = e.clientY;
+        t0 = Date.now();
+      });
+      el.addEventListener("pointerup", (e) => {
+        if (e.pointerId !== id) return;
+        id = -1;
+        const dx = e.clientX - sx;
+        const dy = e.clientY - sy;
+        if (Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy) * 1.4 && Date.now() - t0 < 700) {
+          swiped = true;
+          window.setTimeout(() => (swiped = false), 60);
+          go(m + (dx < 0 ? 1 : -1));
+        }
+      });
+      el.addEventListener("pointercancel", () => (id = -1));
+    }
+    swipe(stage);
+    swipe(lbInner);
+
+    // Initial layout of the indicator (after fonts) and on resize
+    placeIndicator();
+    requestAnimationFrame(() => indicator.classList.add("is-ready"));
+    document.fonts?.ready.then(placeIndicator);
+    new ResizeObserver(placeIndicator).observe(tablist);
+
+    render();
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((en) => en.isIntersecting)) {
+          preload();
+          io.disconnect();
+        }
+      },
+      { rootMargin: "300px" },
+    );
+    io.observe(root);
+  }
+
+  document.querySelectorAll<HTMLElement>("[data-flipora-showcase]").forEach(initShowcase);
+</script>

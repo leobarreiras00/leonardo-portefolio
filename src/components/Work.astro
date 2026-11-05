@@ -6,10 +6,24 @@ import seatly from "../assets/seatly.png";
 import flipora from "../assets/flipora.png";
 import lbwatches from "../assets/lbwatches.png";
 import caresync from "../assets/caresync.png";
+import FliporaShowcase from "./FliporaShowcase.astro";
 
 const images = { seatly, flipora, lbwatches, caresync };
 const featured = projects.filter((p) => p.featured);
 const rest = projects.filter((p) => !p.featured);
+
+// Tiny inline formatter for highlights: `code` and **bold**
+const rich = (text: string) =>
+  text
+    .split(/(`[^`]+`|\*\*[^*]+\*\*)/)
+    .filter(Boolean)
+    .map((part) =>
+      part.startsWith("`")
+        ? { t: "code", v: part.slice(1, -1) }
+        : part.startsWith("**")
+          ? { t: "b", v: part.slice(2, -2) }
+          : { t: "text", v: part },
+    );
 ---
 
 <section id="work" class="section border-t border-line">
@@ -25,9 +39,21 @@ const rest = projects.filter((p) => !p.featured);
     <!-- Featured projects: full-width image, details in two columns -->
     {featured.map((p, i) => (
       <article id={p.slug} class={`reveal scroll-mt-24 overflow-hidden rounded-3xl border border-line bg-surface ${i === 0 ? "mt-12" : "mt-6"}`}>
-        <div class="border-b border-line bg-surface-2 p-4 sm:p-6">
-          <Image src={images[p.slug]} alt={p.imageAlt} width={1600} widths={[720, 1200, 1600]} sizes="(min-width: 1152px) 1040px, 95vw" class="w-full rounded-xl border border-line shadow-2xl shadow-black/40" />
-        </div>
+        {p.slug === "flipora" ? (
+          <div class="border-b border-line bg-surface-2">
+            <FliporaShowcase />
+          </div>
+        ) : (
+          <div class="border-b border-line bg-surface-2 p-4 sm:p-6">
+            <Image src={images[p.slug]} alt={p.imageAlt} width={1600} widths={[720, 1200, 1600]} sizes="(min-width: 1152px) 1040px, 95vw" class="w-full rounded-xl border border-line shadow-2xl shadow-black/40" />
+          </div>
+        )}
+        {p.banner && (
+          <div class="flex items-start gap-3 border-b border-line bg-ok/[0.05] px-6 py-4 text-sm leading-relaxed text-ink/90 sm:px-8">
+            <Icon name="mdi:lock-outline" class="mt-0.5 h-4 w-4 shrink-0 text-ok" />
+            <p>{p.banner}</p>
+          </div>
+        )}
         <div class="grid gap-8 p-6 sm:p-8 lg:grid-cols-[1fr_1.25fr] lg:gap-12">
           <div class="flex flex-col">
             <p class="font-mono text-xs text-faint">{p.kicker}</p>
@@ -49,7 +75,25 @@ const rest = projects.filter((p) => !p.featured);
           </div>
           <ul class="space-y-2.5 text-sm text-ink/90 lg:pt-7">
             {p.highlights.map((h) => (
-              <li class="flex gap-2.5"><Icon name="mdi:check-circle" class="mt-0.5 h-4 w-4 shrink-0 text-accent" /><span>{h}</span></li>
+              <li class="flex gap-2.5">
+                <Icon name="mdi:check-circle" class="mt-0.5 h-4 w-4 shrink-0 text-accent" />
+                {typeof h === "string" ? (
+                  <span>{h}</span>
+                ) : (
+                  <span>
+                    <strong class="font-semibold text-ink">{h.label}</strong>{" "}
+                    {rich(h.text).map((seg) =>
+                      seg.t === "code" ? (
+                        <code class="rounded bg-surface-2 px-1 py-0.5 font-mono text-[0.8em] text-ink">{seg.v}</code>
+                      ) : seg.t === "b" ? (
+                        <strong class="font-semibold text-ink">{seg.v}</strong>
+                      ) : (
+                        seg.v
+                      ),
+                    )}
+                  </span>
+                )}
+              </li>
             ))}
           </ul>
         </div>
@@ -59,9 +103,9 @@ const rest = projects.filter((p) => !p.featured);
     <!-- Other projects -->
     <div class="mt-6 grid gap-6 md:grid-cols-2">
       {rest.map((p) => (
-        <article id={p.slug} class="reveal group flex scroll-mt-24 flex-col overflow-hidden rounded-3xl border border-line bg-surface transition-colors hover:border-accent/40">
+        <article id={p.slug} class="reveal group flex scroll-mt-24 flex-col overflow-hidden rounded-3xl border border-line bg-surface transition-colors duration-200 ease-smooth hover:border-accent/40">
           <div class="overflow-hidden border-b border-line bg-surface-2">
-            <Image src={images[p.slug]} alt={p.imageAlt} width={900} widths={[560, 900]} sizes="(min-width: 768px) 540px, 95vw" class="aspect-[16/9] w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]" />
+            <Image src={images[p.slug]} alt={p.imageAlt} width={900} widths={[560, 900]} sizes="(min-width: 768px) 540px, 95vw" class="aspect-[16/9] w-full object-cover object-top transition-transform duration-500 ease-smooth group-hover:scale-[1.03]" />
           </div>
           <div class="flex flex-1 flex-col p-6">
             <p class="font-mono text-xs text-faint">{p.kicker}</p>
@@ -69,7 +113,7 @@ const rest = projects.filter((p) => !p.featured);
             <p class="mt-2 text-sm leading-relaxed text-muted">{p.summary}</p>
             <ul class="mt-4 space-y-2 text-sm text-ink/85">
               {p.highlights.map((h) => (
-                <li class="flex gap-2.5"><span class="mt-2 h-1 w-1 shrink-0 rounded-full bg-accent"></span><span>{h}</span></li>
+                <li class="flex gap-2.5"><span class="mt-2 h-1 w-1 shrink-0 rounded-full bg-accent"></span><span>{typeof h === "string" ? h : `${h.label} ${h.text}`}</span></li>
               ))}
             </ul>
             <div class="mt-5 flex flex-wrap gap-1.5">

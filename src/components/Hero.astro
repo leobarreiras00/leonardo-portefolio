@@ -16,8 +16,9 @@ import { profile, stats } from "../data/site";
   <div class="container-x relative grid items-center gap-12 lg:grid-cols-[1.35fr_1fr]">
     <div>
       <p class="inline-flex items-center gap-2 rounded-full border border-line bg-surface/70 px-3 py-1.5 text-xs font-medium text-muted">
-        <span class="relative flex h-2 w-2">
-          <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-ok opacity-60 motion-reduce:hidden"></span>
+        <span class="relative flex h-2 w-2" aria-hidden="true">
+          <span class="radar-ring absolute inset-0 rounded-full bg-ok motion-reduce:hidden"></span>
+          <span class="radar-ring radar-ring-late absolute inset-0 rounded-full bg-ok motion-reduce:hidden"></span>
           <span class="relative inline-flex h-2 w-2 rounded-full bg-ok"></span>
         </span>
         {profile.availability}
@@ -48,25 +49,25 @@ import { profile, stats } from "../data/site";
     </div>
 
     <div class="relative mx-auto w-full max-w-[300px] sm:max-w-sm lg:max-w-none">
-      <div class="relative overflow-hidden rounded-3xl border border-line bg-surface">
+      <div class="relative overflow-hidden rounded-3xl border border-white/10 bg-surface">
         <Image src={photo} alt={`Portrait of ${profile.name}`} width={720} widths={[400, 720]} sizes="(min-width: 1024px) 420px, 90vw" class="aspect-[4/5] w-full object-cover object-top" loading="eager" />
-        <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-bg via-bg/70 to-transparent p-5 pt-16">
+        <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#0b0d13] via-[#0b0d13]/40 to-transparent p-5 pt-20">
           <dl class="grid grid-cols-2 gap-3 text-sm">
             <div><dt class="text-faint text-xs">Based in</dt><dd class="text-ink">{profile.location}</dd></div>
-            <div><dt class="text-faint text-xs">Currently</dt><dd class="text-ink">{profile.currently}</dd></div>
+            <div><dt class="text-faint text-xs">Focus</dt><dd class="text-ink">{profile.focusCard}</dd></div>
           </dl>
         </div>
+        <div aria-hidden="true" class="pointer-events-none absolute inset-0 rounded-3xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12)]"></div>
       </div>
     </div>
   </div>
 
   <div class="container-x relative mt-16 md:mt-20">
-    <dl class="grid grid-cols-2 overflow-hidden rounded-2xl border border-line bg-line gap-px md:grid-cols-4">
-      {stats.map((s) => (
-        <div class="bg-surface px-5 py-6">
-          <dt class="sr-only">{s.label}</dt>
-          <dd class="font-heading text-3xl font-semibold text-ink md:text-4xl">{s.value}</dd>
-          <p class="mt-1 text-xs leading-snug text-muted md:text-sm">{s.label}</p>
+    <dl class="grid grid-cols-2 gap-3 md:grid-cols-4">
+      {stats.map((s, i) => (
+        <div class="stat-in flex flex-col rounded-2xl border border-line bg-surface/40 px-5 py-6 transition-all duration-200 ease-smooth hover:border-white/20 hover:bg-white/[0.03]" style={`--i:${i}`}>
+          <dd class="order-1 font-heading text-3xl font-semibold text-ink md:text-4xl">{s.value}</dd>
+          <dt class="order-2 mt-1 text-xs leading-snug text-muted md:text-sm">{s.label}</dt>
         </div>
       ))}
     </dl>

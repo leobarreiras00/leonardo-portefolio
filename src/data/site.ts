@@ -5,8 +5,8 @@ export const profile = {
   role: "Junior Software Developer",
   focus: "Full-stack .NET, Next.js & Android",
   location: "Almada, Portugal",
-  availability: "Open to work · available from November 2026",
-  currently: "Open to work",
+  availability: "Open to work · Available immediately",
+  focusCard: "Full-Stack & Edge Systems",
   intro:
     "Final-year Computer Engineering student at IPS. I've just completed a full-stack internship at 4ITHOLDING (INNOVANOW), where I built Seatly for a real client: a .NET API, a Next.js back office and a Kotlin Android app. I take products end to end, with a designer's eye for the details users actually notice.",
   email: "leo.gbarreiras@gmail.com",
@@ -31,10 +31,11 @@ export type Project = {
   title: string;
   kicker: string;
   summary: string;
-  highlights: string[];
+  highlights: (string | { label: string; text: string })[];
   stack: string[];
   links: { label: string; url: string }[];
   note?: string;
+  banner?: string;
   imageAlt: string;
   featured?: boolean;
 };
@@ -64,21 +65,36 @@ export const projects: Project[] = [
     slug: "flipora",
     featured: true,
     title: "Flipora",
-    kicker: "Personal project · 2026 · in daily use",
+    kicker: "SaaS & Arbitrage Engine · 2026 · Production (Daily Use)",
     summary:
-      "A private tool that spots underpriced listings for resale. It watches OLX, Vinted, Standvirtual and CustoJusto around the clock, values each listing against real market data and alerts me on Telegram within about a minute.",
+      "Real-time multi-category arbitrage & valuation SaaS (iPhones, Watches, Cars & Streetwear). Monitors OLX, Vinted, Standvirtual and CustoJusto 24/7, evaluates listings against live trade-in and econometric market models, and dispatches sub-minute Telegram alerts.",
     highlights: [
-      "Cloudflare Worker on a per-minute cron, with a job dispatcher and a budget of 50 subrequests per run",
-      "Market values built from hundreds of private sellers (one price per seller, shops and outliers excluded), compared with trade-in offers",
-      "Supabase (PostgreSQL) with RLS, RPC functions and an alert queue with atomic claiming (FOR UPDATE SKIP LOCKED)",
-      "Mobile-first Next.js 16 / React 19 app: listings, favourites with price-drop tracking, a deals board, market analysis and per-member access",
-      "Telegram bot with a topic per category, inline actions and a morning digest",
-      "Per-platform circuit breaker, stalled-job alarms, automated tests (node:test) and CI; built with AI-assisted development and code review",
+      {
+        label: "Edge Cron & In-Memory Delta Cache:",
+        text: "Cloudflare Worker on a 1-minute fast-lane cron with a 50-subrequest budget, in-memory isolate cache and a `filter_changed_listings` Postgres RPC that cuts database egress by ~85%.",
+      },
+      {
+        label: "Econometric & Dual-Benchmark Valuation:",
+        text: "Deduped private-seller market medians (1,157+ prices across 949 sellers with IQR outlier trimming), trade-in priority hierarchy (`MAX(Worten, Fnac)`) and automotive regression models comparing Private vs. Dealer benchmarks across generation years and mileage sweet-spots.",
+      },
+      {
+        label: "Bilingual Clause-Level NLP Lexicon:",
+        text: "Deterministic PT/EN defect parser that splits descriptions into grammatical clauses to exclude replaced parts, eSIM-only imports or physical damage while preventing false positives on accessories.",
+      },
+      {
+        label: "Deals Kanban, P&L & DAC7 Tax Ledger:",
+        text: "End-to-end inventory pipeline (Bought → In Prep → Listed → Sold) tracking active stock capital, realized ROI per category and annual CSV exports with EU DAC7 tax threshold alerts.",
+      },
+      {
+        label: "Multi-Tenant SaaS & High-Craft UI:",
+        text: "Supabase RLS, `FOR UPDATE SKIP LOCKED` atomic alert queues, time-boxed read-only trial accounts, modular category packs, Apple-inspired Liquid Glass UI (0–100% refraction), Dark & Soft-Grey Light themes, instant PT/EN i18n and **673+ automated tests** (`node:test`).",
+      },
     ],
-    stack: ["TypeScript", "Cloudflare Workers", "Next.js 16", "React 19", "Supabase", "PostgreSQL", "Tailwind CSS", "Telegram Bot API", "GitHub Actions"],
+    stack: ["TypeScript", "Cloudflare Workers", "Next.js 16", "React 19", "Supabase (PostgreSQL)", "Tailwind CSS", "Telegram Bot API", "Node:test (673+ tests)"],
     links: [],
-    note: "Private tool behind a login: screenshots from the live app. Code walkthrough on request.",
-    imageAlt: "Flipora mobile screens: listings, market analysis and a Telegram alert",
+    banner:
+      "Private SaaS behind authentication — Explore the interactive modules above. 7-day read-only trial account or live code walkthrough available on request.",
+    imageAlt: "Interactive Flipora showcase: live feed, market curves, deals P&L and settings",
   },
   {
     slug: "lbwatches",

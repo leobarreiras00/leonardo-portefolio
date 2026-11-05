@@ -19,6 +19,10 @@
   --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, monospace;
 }
 
+@theme static {
+  --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
@@ -61,10 +65,10 @@
     @apply inline-flex items-center rounded-full border border-line bg-surface-2 px-3 py-1 text-xs font-medium text-muted;
   }
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-200 bg-accent text-white hover:brightness-110 hover:-translate-y-0.5;
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-200 ease-smooth bg-accent text-white hover:brightness-110 hover:-translate-y-0.5;
   }
   .btn-ghost {
-    @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-200 border border-line text-ink hover:border-accent/60 hover:bg-accent-soft;
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-200 ease-smooth border border-line text-ink hover:border-accent/60 hover:bg-accent-soft;
   }
   .link-arrow {
     @apply inline-flex items-center gap-1.5 text-sm font-medium text-ink underline-offset-4 hover:text-accent hover:underline;
@@ -75,13 +79,40 @@
 .reveal {
   opacity: 0;
   transform: translateY(16px);
-  transition: opacity 0.7s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: opacity 0.7s var(--ease-smooth, cubic-bezier(0.22, 1, 0.36, 1)), transform 0.7s var(--ease-smooth, cubic-bezier(0.22, 1, 0.36, 1));
 }
 .reveal.is-visible {
   opacity: 1;
   transform: none;
 }
+/* Hero: availability radar pulse and staggered metric entrance */
+@keyframes radar {
+  0% { transform: scale(1); opacity: 0.5; }
+  70%, 100% { transform: scale(3.4); opacity: 0; }
+}
+.radar-ring {
+  animation: radar 2.6s var(--ease-smooth, cubic-bezier(0.22, 1, 0.36, 1)) infinite;
+  will-change: transform, opacity;
+}
+.radar-ring-late { animation-delay: 1.3s; }
+@keyframes rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+.stat-in {
+  animation: rise 0.6s var(--ease-smooth, cubic-bezier(0.22, 1, 0.36, 1)) both;
+  animation-delay: calc(var(--i, 0) * 70ms + 250ms);
+}
+
+/* Respect reduced motion everywhere: no movement, no pulsing, no smooth scroll */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .reveal { opacity: 1; transform: none; transition: none; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
