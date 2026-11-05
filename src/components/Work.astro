@@ -8,6 +8,7 @@ import lbwatches from "../assets/lbwatches.png";
 import caresync from "../assets/caresync.png";
 import FliporaShowcase from "./FliporaShowcase.astro";
 import SeatlyShowcase from "./SeatlyShowcase.astro";
+import LbwatchesShowcase from "./LbwatchesShowcase.astro";
 
 const images = { seatly, flipora, lbwatches, caresync };
 const featured = projects.filter((p) => p.featured);
@@ -47,6 +48,10 @@ const rich = (text: string) =>
         ) : p.slug === "seatly" ? (
           <div class="border-b border-line bg-surface-2">
             <SeatlyShowcase />
+          </div>
+        ) : p.slug === "lbwatches" ? (
+          <div class="border-b border-line bg-[#050505]">
+            <LbwatchesShowcase />
           </div>
         ) : (
           <div class="border-b border-line bg-surface-2 p-4 sm:p-6">
@@ -106,11 +111,11 @@ const rich = (text: string) =>
     ))}
 
     <!-- Other projects -->
-    <div class="mt-6 grid gap-6 md:grid-cols-2">
+    <div class={`mt-6 grid gap-6 ${rest.length > 1 ? "md:grid-cols-2" : ""}`}>
       {rest.map((p) => (
-        <article id={p.slug} class="reveal group flex scroll-mt-24 flex-col overflow-hidden rounded-3xl border border-line bg-surface transition-colors duration-200 ease-smooth hover:border-accent/40">
-          <div class="overflow-hidden border-b border-line bg-surface-2">
-            <Image src={images[p.slug]} alt={p.imageAlt} width={900} widths={[560, 900]} sizes="(min-width: 768px) 540px, 95vw" class="aspect-[16/9] w-full object-cover object-top transition-transform duration-500 ease-smooth group-hover:scale-[1.03]" />
+        <article id={p.slug} class={`reveal group flex scroll-mt-24 flex-col overflow-hidden rounded-3xl border border-line bg-surface transition-colors duration-200 ease-smooth hover:border-accent/40 ${rest.length === 1 ? "md:grid md:grid-cols-[1.1fr_1fr]" : ""}`}>
+          <div class={`overflow-hidden border-b border-line bg-surface-2 ${rest.length === 1 ? "md:border-b-0 md:border-r" : ""}`}>
+            <Image src={images[p.slug]} alt={p.imageAlt} width={900} widths={[560, 900]} sizes={rest.length === 1 ? "(min-width: 768px) 560px, 95vw" : "(min-width: 768px) 540px, 95vw"} class={`w-full object-cover object-top transition-transform duration-500 ease-smooth group-hover:scale-[1.03] ${rest.length === 1 ? "aspect-[16/9] md:aspect-auto md:h-full" : "aspect-[16/9]"}`} />
           </div>
           <div class="flex flex-1 flex-col p-6">
             <p class="font-mono text-xs text-faint">{p.kicker}</p>

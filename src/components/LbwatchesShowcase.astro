@@ -1,0 +1,390 @@
+---
+// LBWATCHES showcase: a looping "screen recording" of the live mobile site, built from
+// real captures in /public/lbwatches/ so it stays sharp and tiny. The scene list on the
+// left is both the navigation and the progress indicator. Autoplay only runs while the
+// phone is on screen, pauses on hover, and can always be paused (and starts paused when
+// the visitor prefers reduced motion).
+import { Icon } from "astro-icon/components";
+
+type Tap = { x: number; y: number; at: number }; // x/y are 0-1 of the screen, "at" is ms into the step
+type Step = { src: string; alt: string; dur: number; tap?: Tap };
+type Scene = { title: string; caption: string; steps: Step[] };
+
+const B = "/lbwatches/";
+
+const scenes: Scene[] = [
+  {
+    title: "Storefront",
+    caption: "Hand-assembled watches from Setúbal, with one clear path: browse the collections or ask on WhatsApp.",
+    steps: [
+      {
+        src: B + "home.webp",
+        alt: "LBWATCHES home screen: Relógios montados à mão, em Setúbal, with a GMT watch below",
+        dur: 3400,
+        tap: { x: 0.5, y: 0.437, at: 2400 },
+      },
+    ],
+  },
+  {
+    title: "Collections",
+    caption: "15 collections that open as sheets, down to a model page with its gallery, lead time and a one-tap WhatsApp question.",
+    steps: [
+      {
+        src: B + "collections.webp",
+        alt: "LBWATCHES collections carousel with filter chips and the Estilo Submariner card",
+        dur: 2800,
+        tap: { x: 0.377, y: 0.557, at: 1900 },
+      },
+      {
+        src: B + "collection-sheet.webp",
+        alt: "Estilo Submariner collection sheet listing six models",
+        dur: 2600,
+        tap: { x: 0.26, y: 0.419, at: 1700 },
+      },
+      {
+        src: B + "model.webp",
+        alt: "Blue Submariner model sheet with gallery, price, lead time and an Add to selection button",
+        dur: 3200,
+      },
+    ],
+  },
+  {
+    title: "Creator Studio",
+    caption: "Pick the bezel, dial, hands or case and the watch updates live. Or tap Surprise me and see what comes out.",
+    steps: [
+      {
+        src: B + "creator-1.webp",
+        alt: "Creator Studio showing a GMT watch with a Pepsi ceramic bezel",
+        dur: 2300,
+        tap: { x: 0.378, y: 0.564, at: 1400 },
+      },
+      {
+        src: B + "creator-2.webp",
+        alt: "Creator Studio dial options: classic black, blue detail and red detail",
+        dur: 2300,
+        tap: { x: 0.805, y: 0.692, at: 1400 },
+      },
+      {
+        src: B + "creator-3.webp",
+        alt: "Creator Studio with the black and red detail dial applied",
+        dur: 2100,
+        tap: { x: 0.751, y: 0.473, at: 1200 },
+      },
+      {
+        src: B + "creator-4.webp",
+        alt: "Creator Studio after Surprise me: a two-tone GMT with a Pepsi bezel and red detail dial",
+        dur: 3200,
+      },
+    ],
+  },
+];
+
+// Flat timeline for the script: one entry per screenshot, in order.
+const steps = scenes.flatMap((s, si) => s.steps.map((st) => ({ scene: si, dur: st.dur, tap: st.tap ?? null })));
+const flat = scenes.flatMap((s, si) => s.steps.map((st) => ({ ...st, scene: si })));
+
+const facts = [
+  { v: "~90", k: "watches" },
+  { v: "15", k: "collections" },
+  { v: "23", k: "customer reviews" },
+];
+---
+
+<div class="lw-showcase relative isolate overflow-hidden px-4 py-8 sm:px-8 sm:py-10 lg:px-12 lg:py-12" data-lw data-steps={JSON.stringify(steps)} data-state="paused">
+  <div aria-hidden="true" class="lw-glow pointer-events-none absolute -z-10"></div>
+
+  <div class="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-16">
+    <!-- Scenes: navigation + progress -->
+    <div class="order-2 min-w-0 lg:order-1">
+      <ol class="flex max-w-lg flex-col gap-1.5">
+        {scenes.map((s, i) => (
+          <li>
+            <button type="button" class="lw-scene group w-full text-left" data-lw-scene={i} aria-current={i === 0 ? "true" : "false"}>
+              <span class="lw-serif block text-2xl leading-tight sm:text-[1.7rem]">{s.title}</span>
+              <span class="lw-caption mt-1.5 block text-sm leading-relaxed text-muted">{s.caption}</span>
+              <span class="lw-track mt-3 block" aria-hidden="true"><i></i></span>
+            </button>
+          </li>
+        ))}
+      </ol>
+
+      <dl class="mt-8 flex max-w-lg gap-8 border-t border-white/10 pt-6 sm:gap-12">
+        {facts.map((f) => (
+          <div class="flex flex-col-reverse">
+            <dt class="mt-1.5 text-xs text-faint">{f.k}</dt>
+            <dd class="lw-serif lw-gold text-3xl leading-none sm:text-4xl">{f.v}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+
+    <!-- Phone -->
+    <div class="order-1 mx-auto flex flex-col items-center lg:order-2">
+      <div class="lw-phone relative w-[236px] rounded-[2.5rem] border border-white/15 bg-gradient-to-b from-[#1b1c20] to-[#08080a] p-[8px] sm:w-[256px] lg:w-[284px]" data-lw-phone>
+        <span aria-hidden="true" class="absolute -left-[3px] top-[84px] h-7 w-[3px] rounded-l-sm bg-white/15"></span>
+        <span aria-hidden="true" class="absolute -left-[3px] top-[126px] h-11 w-[3px] rounded-l-sm bg-white/15"></span>
+        <span aria-hidden="true" class="absolute -right-[3px] top-[140px] h-16 w-[3px] rounded-r-sm bg-white/15"></span>
+        <div class="relative overflow-hidden rounded-[2.05rem] bg-black ring-1 ring-black/70" style="aspect-ratio: 640 / 1328">
+          {flat.map((s, i) => (
+            <div class={`lw-layer${i === 0 ? " is-on" : ""}`} data-lw-layer aria-hidden={i === 0 ? "false" : "true"}>
+              <img src={s.src} alt={s.alt} width="640" height="1328" loading="lazy" decoding="async" draggable="false" class="h-full w-full object-cover object-top" />
+            </div>
+          ))}
+          <span class="lw-tap" data-lw-tap aria-hidden="true"></span>
+        </div>
+      </div>
+
+      <button type="button" class="lw-toggle mt-5 inline-flex items-center gap-2 rounded-full border border-white/15 px-3.5 py-2 text-xs font-medium text-muted transition-colors duration-200 hover:border-white/30 hover:text-ink" data-lw-toggle>
+        <Icon name="mdi:play" class="lw-i-play h-4 w-4" />
+        <Icon name="mdi:pause" class="lw-i-pause h-4 w-4" />
+        <span class="lw-t-play">Play tour</span>
+        <span class="lw-t-pause">Pause tour</span>
+      </button>
+    </div>
+  </div>
+
+  <p class="mt-8 text-xs text-faint">Captured from the live site at phone size. The tour replays real screens, not a video.</p>
+</div>
+
+<style is:global>
+  .lw-showcase {
+    --lw-gold: #c9b48f;
+    --lw-cream: #ece6da;
+    --lw-ease: var(--ease-smooth, cubic-bezier(0.22, 1, 0.36, 1));
+    background: #050505;
+  }
+  .lw-serif {
+    font-family: "Bodoni Moda", "Bodoni 72", "Didot", "Playfair Display", "Bodoni MT", Georgia, serif;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--lw-cream);
+  }
+  .lw-gold {
+    color: var(--lw-gold);
+  }
+  /* Warm glow behind the phone, the only decoration */
+  .lw-glow {
+    right: 4%;
+    top: 50%;
+    width: min(46rem, 90%);
+    height: 80%;
+    transform: translateY(-50%);
+    border-radius: 9999px;
+    background: radial-gradient(closest-side, rgb(201 180 143 / 0.13), rgb(201 180 143 / 0.04) 55%, transparent 75%);
+    filter: blur(24px);
+  }
+
+  /* Scene list */
+  .lw-scene {
+    display: block;
+    padding: 1rem 1.1rem 1.1rem;
+    border-radius: 1rem;
+    border: 1px solid transparent;
+    opacity: 0.5;
+    transition: opacity 260ms var(--lw-ease), background-color 260ms var(--lw-ease), border-color 260ms var(--lw-ease);
+  }
+  .lw-scene:hover {
+    opacity: 0.85;
+  }
+  .lw-scene[aria-current="true"] {
+    opacity: 1;
+    background: rgb(255 255 255 / 0.03);
+    border-color: rgb(255 255 255 / 0.08);
+  }
+  .lw-track {
+    height: 2px;
+    border-radius: 2px;
+    background: rgb(255 255 255 / 0.1);
+    overflow: hidden;
+  }
+  .lw-track i {
+    display: block;
+    height: 100%;
+    background: var(--lw-gold);
+    transform-origin: left center;
+    transform: scaleX(var(--p, 0));
+  }
+  .lw-scene:not([aria-current="true"]) .lw-track i {
+    transform: scaleX(0);
+  }
+
+  /* Screens crossfade (opacity + a tiny scale) */
+  .lw-layer {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transform: scale(1.012);
+    pointer-events: none;
+    transition: opacity 340ms var(--lw-ease), transform 340ms var(--lw-ease);
+  }
+  .lw-layer.is-on {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* The recorded tap, drawn where the original tap landed */
+  .lw-tap {
+    position: absolute;
+    left: calc(var(--x, 0.5) * 100%);
+    top: calc(var(--y, 0.5) * 100%);
+    width: 44px;
+    height: 44px;
+    margin: -22px 0 0 -22px;
+    border-radius: 9999px;
+    border: 1.5px solid rgb(236 230 218 / 0.9);
+    background: rgb(236 230 218 / 0.22);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 5;
+  }
+  .lw-tap.is-firing {
+    animation: lw-tap 720ms var(--lw-ease) both;
+  }
+  @keyframes lw-tap {
+    0% {
+      opacity: 0;
+      transform: scale(0.35);
+    }
+    25% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      transform: scale(1.5);
+    }
+  }
+
+  /* Play / pause toggle shows the action it will perform */
+  .lw-showcase[data-state="playing"] .lw-i-play,
+  .lw-showcase[data-state="playing"] .lw-t-play,
+  .lw-showcase[data-state="paused"] .lw-i-pause,
+  .lw-showcase[data-state="paused"] .lw-t-pause {
+    display: none;
+  }
+</style>
+
+<script>
+  // The timeline lives in data-steps: one entry per screenshot, with the scene it belongs to,
+  // how long it stays, and an optional recorded tap.
+  type Step = { scene: number; dur: number; tap: { x: number; y: number; at: number } | null };
+
+  document.querySelectorAll<HTMLElement>("[data-lw]").forEach((root) => {
+    const steps: Step[] = JSON.parse(root.dataset.steps ?? "[]");
+    const layers = Array.from(root.querySelectorAll<HTMLElement>("[data-lw-layer]"));
+    const scenes = Array.from(root.querySelectorAll<HTMLButtonElement>("[data-lw-scene]"));
+    const tapEl = root.querySelector<HTMLElement>("[data-lw-tap]");
+    const phone = root.querySelector<HTMLElement>("[data-lw-phone]");
+    const toggle = root.querySelector<HTMLButtonElement>("[data-lw-toggle]");
+    if (!steps.length || steps.length !== layers.length || !tapEl || !toggle) return;
+
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const sceneFirst = scenes.map((_, s) => steps.findIndex((st) => st.scene === s));
+    const sceneTotal = scenes.map((_, s) => steps.filter((st) => st.scene === s).reduce((a, st) => a + st.dur, 0));
+
+    let i = 0;
+    let t = 0;
+    let last = 0;
+    let raf = 0;
+    let tapDone = false;
+    let wantPlay = !reduce; // the visitor's choice (or the default)
+    let onScreen = false;
+    let hovered = false;
+
+    const running = () => wantPlay && onScreen && !hovered && !document.hidden;
+
+    const setState = () => {
+      root.dataset.state = wantPlay ? "playing" : "paused";
+    };
+
+    const progress = () => {
+      const s = steps[i].scene;
+      const before = steps.slice(0, i).filter((st) => st.scene === s).reduce((a, st) => a + st.dur, 0);
+      scenes[s].style.setProperty("--p", String(Math.min(1, (before + t) / sceneTotal[s])));
+    };
+
+    const show = (n: number) => {
+      i = (n + steps.length) % steps.length;
+      t = 0;
+      tapDone = false;
+      tapEl.classList.remove("is-firing");
+      layers.forEach((l, k) => {
+        l.classList.toggle("is-on", k === i);
+        l.setAttribute("aria-hidden", k === i ? "false" : "true");
+      });
+      scenes.forEach((b, s) => {
+        const on = s === steps[i].scene;
+        b.setAttribute("aria-current", on ? "true" : "false");
+        if (!on) b.style.removeProperty("--p");
+      });
+      progress();
+    };
+
+    const fireTap = (x: number, y: number) => {
+      tapEl.style.setProperty("--x", String(x));
+      tapEl.style.setProperty("--y", String(y));
+      tapEl.classList.remove("is-firing");
+      void tapEl.offsetWidth; // restart the animation
+      tapEl.classList.add("is-firing");
+    };
+
+    const frame = (now: number) => {
+      if (!running()) {
+        raf = 0;
+        return;
+      }
+      t += Math.min(now - last, 100); // clamp so a background tab doesn't skip scenes
+      last = now;
+      const st = steps[i];
+      if (st.tap && !tapDone && t >= st.tap.at) {
+        tapDone = true;
+        fireTap(st.tap.x, st.tap.y);
+      }
+      if (t >= st.dur) show(i + 1);
+      else progress();
+      raf = requestAnimationFrame(frame);
+    };
+
+    const sync = () => {
+      if (running() && !raf) {
+        last = performance.now();
+        raf = requestAnimationFrame(frame);
+      }
+    };
+
+    // Preload every screen the first time the tour gets close to the viewport
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          onScreen = e.isIntersecting && e.intersectionRatio > 0.35;
+          if (e.isIntersecting) root.querySelectorAll<HTMLImageElement>("img[loading=lazy]").forEach((img) => (img.loading = "eager"));
+        });
+        sync();
+      },
+      { threshold: [0, 0.35, 0.6], rootMargin: "200px 0px" },
+    );
+    io.observe(root);
+
+    toggle.addEventListener("click", () => {
+      wantPlay = !wantPlay;
+      setState();
+      sync();
+    });
+    scenes.forEach((b, s) => {
+      b.addEventListener("click", () => {
+        show(sceneFirst[s]);
+        sync();
+      });
+    });
+    phone?.addEventListener("pointerenter", () => {
+      hovered = true;
+    });
+    phone?.addEventListener("pointerleave", () => {
+      hovered = false;
+      sync();
+    });
+    document.addEventListener("visibilitychange", sync);
+
+    setState();
+    show(0);
+  });
+</script>

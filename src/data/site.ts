@@ -98,18 +98,21 @@ export const projects: Project[] = [
   },
   {
     slug: "lbwatches",
+    featured: true,
     title: "LBWATCHES",
     kicker: "Own brand · since 2024 · website since 2026",
     summary:
-      "Catalog and storefront for my custom watch brand. Mobile-first, with WhatsApp as the main conversion channel, and it brings in leads from organic Google search with no paid ads.",
+      "Catalog and storefront for my own custom watch brand: hand-assembled, Seiko-based pieces sold through a mobile-first site with a live Creator Studio. WhatsApp is the main conversion channel, and leads arrive through organic Google search.",
     highlights: [
-      "~90 watches across 15 collections, with detail pages and model comparison",
-      "Interactive Creator Studio to customise pieces",
-      "Responsive design, technical SEO (sitemap, JSON-LD) and Vercel Analytics",
+      "~90 watches across 15 collections, each with a detail page and side-by-side model comparison",
+      "Creator Studio: pick case, dial, hands and bezel and watch the build update live, with a Surprise me shuffle",
+      "Built for phones first: bottom navigation, collections and models that open as sheets, WhatsApp one tap away",
+      "Consent-first cookie banner: analytics and marketing only after an explicit opt-in",
+      "Technical SEO (sitemap, robots, JSON-LD) and Vercel Analytics, with 23 customer reviews on the site",
     ],
     stack: ["Next.js 14", "TypeScript", "Tailwind CSS", "Framer Motion", "Vercel"],
     links: [{ label: "lbwatches.pt", url: "https://lbwatches.pt" }],
-    imageAlt: "LBWATCHES website showing the watch catalog",
+    imageAlt: "LBWATCHES mobile site: storefront, collections, model page and the Creator Studio",
   },
   {
     slug: "caresync",
