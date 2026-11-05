@@ -7,6 +7,7 @@ import flipora from "../assets/flipora.png";
 import lbwatches from "../assets/lbwatches.png";
 import caresync from "../assets/caresync.png";
 import FliporaShowcase from "./FliporaShowcase.astro";
+import SeatlyShowcase from "./SeatlyShowcase.astro";
 
 const images = { seatly, flipora, lbwatches, caresync };
 const featured = projects.filter((p) => p.featured);
@@ -42,6 +43,10 @@ const rich = (text: string) =>
         {p.slug === "flipora" ? (
           <div class="border-b border-line bg-surface-2">
             <FliporaShowcase />
+          </div>
+        ) : p.slug === "seatly" ? (
+          <div class="border-b border-line bg-surface-2">
+            <SeatlyShowcase />
           </div>
         ) : (
           <div class="border-b border-line bg-surface-2 p-4 sm:p-6">

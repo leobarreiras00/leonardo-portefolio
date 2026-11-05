@@ -1,0 +1,199 @@
+---
+// Lightweight showcase for Seatly: the web back office and the Android app side by side.
+// Screens live in /public/seatly/ (captured from the live back office, demo data only).
+import { Icon } from "astro-icon/components";
+
+type Shot = { label: string; src: string; alt: string; caption: string };
+
+const B = "/seatly/";
+
+const web: Shot[] = [
+  {
+    label: "Sign in",
+    src: B + "web-login.jpg",
+    alt: "Seatly back office sign-in page with a seat map illustration and the tagline Cada convidado no seu lugar",
+    caption: "Sign-in for central administration, secured with JWT authentication and server-side roles.",
+  },
+  {
+    label: "Dashboard",
+    src: B + "web-dashboard.jpg",
+    alt: "Seatly back office dashboard: 31 of 900 seats validated, with a seat map and totals for active companies, events and seats",
+    caption: "Seat validation across every event at a glance, with a live seat map and totals per company.",
+  },
+  {
+    label: "Companies",
+    src: B + "web-empresa.jpg",
+    alt: "Seatly back office company page with managers, users and events for a client company",
+    caption: "Multi-tenant client management: managers, users and events are scoped to each company, with role-based access.",
+  },
+  {
+    label: "Team",
+    src: B + "web-equipa.jpg",
+    alt: "Seatly team page listing profiles with their role per company and event, personal details blurred",
+    caption: "Profiles and access control: each person's role per company and event, managed from one place.",
+  },
+  {
+    label: "Audit log",
+    src: B + "web-auditoria.jpg",
+    alt: "Seatly audit log showing seat validation and removal records filterable by action and role",
+    caption: "Every action is traceable per event, filterable by action and role, and exportable to PDF.",
+  },
+];
+
+const app: Shot[] = [
+  {
+    label: "Events",
+    src: B + "app-painel.png",
+    alt: "Seatly Android app home screen listing the events assigned to a manager, grouped by company",
+    caption: "Staff only see the events they are assigned to, grouped by company.",
+  },
+  {
+    label: "Guests",
+    src: B + "app-convidados.png",
+    alt: "Seatly Android app guest list with validation progress, search and a sync button",
+    caption: "Guest list with live progress, search and one-tap validation. Syncs when back online.",
+  },
+  {
+    label: "Scanner",
+    src: B + "app-scanner.png",
+    alt: "Seatly Android app QR code scanner with a camera viewfinder",
+    caption: "QR scanning at the door with CameraX and ML Kit.",
+  },
+];
+
+const groups = [
+  { id: "web", name: "Back office screens", shots: web },
+  { id: "app", name: "Android app screens", shots: app },
+] as const;
+---
+
+<div class="sx-showcase relative isolate overflow-hidden p-4 sm:p-6 lg:p-8">
+  <div aria-hidden="true" class="pointer-events-none absolute left-[18%] top-1/2 -z-10 h-[70%] w-[55%] -translate-y-1/2 rounded-full bg-violet-500/[0.09] blur-3xl"></div>
+
+  <div class="grid items-end gap-10 lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-12">
+    <!-- Back office (web) -->
+    <div data-sx-group class="min-w-0">
+      <div class="overflow-hidden rounded-2xl border border-white/15 bg-[#0b0d13] shadow-[0_32px_64px_-24px_rgba(0,0,0,0.8),inset_0_1px_0_0_rgba(255,255,255,0.14)]">
+        <div class="flex items-center gap-1.5 border-b border-white/10 bg-[#10131a] px-3.5 py-2.5">
+          <span class="h-2.5 w-2.5 rounded-full bg-white/15"></span>
+          <span class="h-2.5 w-2.5 rounded-full bg-white/15"></span>
+          <span class="h-2.5 w-2.5 rounded-full bg-white/15"></span>
+          <span class="ml-3 flex h-5 min-w-0 flex-1 items-center gap-1.5 rounded-md bg-white/[0.05] px-2 text-[10px] text-faint">
+            <Icon name="mdi:lock-outline" class="h-3 w-3 shrink-0" />
+            <span class="truncate">seatly-backoffice.vercel.app</span>
+          </span>
+        </div>
+        <div id="sx-web-panel" role="tabpanel" aria-labelledby="sx-web-tab-0" data-sx-stage class="relative overflow-hidden bg-surface" style="aspect-ratio: 16 / 10">
+          {web.map((s, i) => (
+            <div class={`sx-layer${i === 0 ? " is-on" : ""}`} data-sx-layer aria-hidden={i === 0 ? "false" : "true"}>
+              <img src={s.src} alt={s.alt} width="800" height="500" loading="lazy" decoding="async" draggable="false" class="h-full w-full object-cover object-top" />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="mt-5 flex flex-col gap-3">
+        <div role="tablist" aria-label={groups[0].name} class="inline-flex max-w-full items-center gap-0.5 self-start overflow-x-auto rounded-full border border-line bg-bg/60 p-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {web.map((s, i) => (
+            <button type="button" role="tab" id={`sx-web-tab-${i}`} aria-controls="sx-web-panel" aria-selected={i === 0 ? "true" : "false"} tabindex={i === 0 ? 0 : -1} data-sx-tab data-caption={s.caption} class="sx-tab shrink-0">{s.label}</button>
+          ))}
+        </div>
+        <p class="min-h-[3rem] max-w-xl text-sm leading-relaxed text-muted" aria-live="polite" data-sx-caption>{web[0].caption}</p>
+      </div>
+    </div>
+
+    <!-- Android app -->
+    <div data-sx-group class="mx-auto w-full max-w-[260px] lg:mx-0 lg:w-[250px]">
+      <div id="sx-app-panel" role="tabpanel" aria-labelledby="sx-app-tab-0" data-sx-stage class="relative mx-auto w-[210px] sm:w-[232px] lg:w-full" style="aspect-ratio: 285 / 600">
+        {app.map((s, i) => (
+          <div class={`sx-layer${i === 0 ? " is-on" : ""}`} data-sx-layer aria-hidden={i === 0 ? "false" : "true"}>
+            <img src={s.src} alt={s.alt} width="285" height="600" loading="lazy" decoding="async" draggable="false" class="h-full w-full object-contain drop-shadow-[0_24px_28px_rgba(0,0,0,0.5)]" />
+          </div>
+        ))}
+      </div>
+
+      <div class="mt-5 flex flex-col items-center gap-3 text-center">
+        <div role="tablist" aria-label={groups[1].name} class="inline-flex items-center gap-0.5 rounded-full border border-line bg-bg/60 p-1">
+          {app.map((s, i) => (
+            <button type="button" role="tab" id={`sx-app-tab-${i}`} aria-controls="sx-app-panel" aria-selected={i === 0 ? "true" : "false"} tabindex={i === 0 ? 0 : -1} data-sx-tab data-caption={s.caption} class="sx-tab">{s.label}</button>
+          ))}
+        </div>
+        <p class="min-h-[4.5rem] text-sm leading-relaxed text-muted" aria-live="polite" data-sx-caption>{app[0].caption}</p>
+      </div>
+    </div>
+  </div>
+
+  <p class="mt-6 text-xs text-faint">Captured from the live back office and the Android app, using demo data. Personal details are blurred.</p>
+</div>
+
+<style>
+  /* Screens share one grid cell and crossfade (opacity + a tiny scale) */
+  .sx-layer {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transform: scale(0.99);
+    pointer-events: none;
+    transition: opacity 220ms var(--ease-smooth, cubic-bezier(0.22, 1, 0.36, 1)), transform 220ms var(--ease-smooth, cubic-bezier(0.22, 1, 0.36, 1));
+  }
+  .sx-layer.is-on {
+    opacity: 1;
+    transform: none;
+  }
+  .sx-tab {
+    border-radius: 9999px;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    line-height: 1;
+    color: var(--color-muted, #9aa1b2);
+    transition: background-color 200ms var(--ease-smooth, ease), color 200ms var(--ease-smooth, ease);
+  }
+  .sx-tab:hover {
+    color: var(--color-ink, #f3f5fa);
+  }
+  .sx-tab[aria-selected="true"] {
+    background: rgb(255 255 255 / 0.1);
+    color: var(--color-ink, #f3f5fa);
+  }
+</style>
+
+<script>
+  // Each [data-sx-group] is an independent tab set: tabs, stacked screens and a caption.
+  document.querySelectorAll<HTMLElement>("[data-sx-group]").forEach((group) => {
+    const tabs = Array.from(group.querySelectorAll<HTMLButtonElement>("[data-sx-tab]"));
+    const layers = Array.from(group.querySelectorAll<HTMLElement>("[data-sx-layer]"));
+    const stage = group.querySelector<HTMLElement>("[data-sx-stage]");
+    const caption = group.querySelector<HTMLElement>("[data-sx-caption]");
+    if (!tabs.length || tabs.length !== layers.length) return;
+
+    const select = (index: number, focus = false) => {
+      tabs.forEach((tab, i) => {
+        const on = i === index;
+        tab.setAttribute("aria-selected", on ? "true" : "false");
+        tab.tabIndex = on ? 0 : -1;
+        layers[i].classList.toggle("is-on", on);
+        layers[i].setAttribute("aria-hidden", on ? "false" : "true");
+      });
+      if (stage) stage.setAttribute("aria-labelledby", tabs[index].id);
+      if (caption) caption.textContent = tabs[index].dataset.caption ?? "";
+      if (focus) tabs[index].focus();
+    };
+
+    tabs.forEach((tab, i) => {
+      tab.addEventListener("click", () => select(i));
+      tab.addEventListener("keydown", (e) => {
+        const last = tabs.length - 1;
+        const next =
+          e.key === "ArrowRight" ? (i === last ? 0 : i + 1)
+          : e.key === "ArrowLeft" ? (i === 0 ? last : i - 1)
+          : e.key === "Home" ? 0
+          : e.key === "End" ? last
+          : -1;
+        if (next < 0) return;
+        e.preventDefault();
+        select(next, true);
+      });
+    });
+  });
+</script>
