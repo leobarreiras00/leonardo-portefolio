@@ -27,7 +27,7 @@ export const stats = [
 ];
 
 export type Project = {
-  slug: "seatly" | "flipora" | "lbwatches" | "caresync";
+  slug: "seatly" | "flipora" | "lbwatches" | "vellum" | "caresync";
   title: string;
   kicker: string;
   summary: string;
@@ -113,6 +113,40 @@ export const projects: Project[] = [
     stack: ["Next.js 14", "TypeScript", "Tailwind CSS", "Framer Motion", "Vercel"],
     links: [{ label: "lbwatches.pt", url: "https://lbwatches.pt" }],
     imageAlt: "LBWATCHES mobile site: storefront, collections, model page and the Creator Studio",
+  },
+  {
+    slug: "vellum",
+    featured: true,
+    title: "Vellum",
+    kicker: "Own product · 2026 · Live",
+    summary:
+      "Workspace and knowledge platform that combines Notion's blocks, OneNote's notebook hierarchy and Word-grade A4 pagination. Write on a true A4 sheet, draw diagrams in the page, plan on a calendar of its own and export to PDF or Word without reformatting.",
+    highlights: [
+      {
+        label: "A4 editor:",
+        text: "TipTap v2 block editor on a 210 × 297 mm sheet with ruler, covers, tables and page breaks, plus a Mermaid studio with split code/preview and figure captions.",
+      },
+      {
+        label: "Exports that keep the layout:",
+        text: "PDF through Playwright, Word through `docx`, Markdown and standalone HTML, all from a paginated preview of exactly what comes out.",
+      },
+      {
+        label: "Calendar & effort telemetry:",
+        text: "Own calendar with recurrence and important days, and a dashboard that measures real active time, an effort index and editorial cadence with its own SVG charts.",
+      },
+      {
+        label: "RBAC & offline:",
+        text: "Better-Auth with five roles (`SUPER_ADMIN`, `OWNER`, `EDITOR`, `COMMENTER`, `VIEWER`) enforced on every Server Action, and an IndexedDB offline queue with conflict resolution.",
+      },
+      {
+        label: "Design system:",
+        text: "\"Tactile Editorial Atelier\": five curated themes and eight geometric wallpapers on CSS tokens, Newsreader / Plus Jakarta Sans / JetBrains Mono, a pen-drawn entrance, WCAG AA contrast on every theme, and a full Portuguese (PT-PT) interface.",
+      },
+    ],
+    stack: ["Next.js 15", "TypeScript (strict)", "Tailwind CSS", "Motion", "TipTap v2", "Mermaid", "Prisma", "PostgreSQL (Neon)", "Better-Auth", "Playwright", "Vitest", "Docker", "Railway"],
+    links: [{ label: "Live app", url: "https://vellumpt.up.railway.app" }],
+    note: "Sign-in required: the source is proprietary (code visible, all rights reserved). A live walkthrough is available on request.",
+    imageAlt: "Vellum tour: the pen-drawn entrance, dashboard, A4 editor with Mermaid, calendar, export and five themes",
   },
   {
     slug: "caresync",
